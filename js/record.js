@@ -4,7 +4,7 @@ var startLoop1,startLoop2,startLoop3,startLoop4,startLoop5,startLoop6;
 
 var length;
 var lengthCounter = 0;
-let loopLength = 4;
+let loopLength = 2;
 
 
 looper1 = new p5.SoundLoop(function(timeFromNow){

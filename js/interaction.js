@@ -7,6 +7,7 @@ $(document).click(() => {
     if(event.target.className === "toolImage"){
     console.log("a click on tool ", event.target.id);
     selector = event.target.id;
+
     }
   });
 
@@ -111,8 +112,6 @@ $(document).click(function(){
                      <img class="galleryPicture" width=300 height=300 src='${sketches[item].drawing}'/>
                 </div>`);
             })
-
-            //  console.log(Object.keys(sketches));
              });
         }
     })

@@ -21,6 +21,9 @@ var startRecording, stopRecording, playbackRecording, stopRecorder;
 var startLooper, startLooping;
 var database;
 var cnv;
+var pathRecord;
+
+
 
 function preload(){
   sine = loadSound('../Assets/sounds/synthy.wav', sineStart);
@@ -86,7 +89,9 @@ function draw(){
 
   }
 
-  // mouseDown sine 
+
+/* -----------mouseDown------------- */
+
   $('#soniDraw').mousedown(function(){
   if(selector === "sine"){
     sine.setVolume(0.1, 0.1, 0.05);
@@ -124,12 +129,16 @@ function draw(){
   });
 
 
-  //mouseIsPressed
+/* -----------mousePressed------------- */
+
+
+
   if(mouseIsPressed && selector === "sine"){
   // sine.rate(map(mouseX, 0, w, 1.5, 2.0));
   strokeWeight(2);
   stroke(0);
   line(mouseX,mouseY, pmouseX,pmouseY);
+
 
   }else if(mouseIsPressed && selector === "triangle"){
     strokeWeight(2);
@@ -146,9 +155,14 @@ function draw(){
   }
 
 
-//mousedUp 
+
+
+/* -----------mouseUp------------- */
+
 $('#soniDraw').mouseup(function(){
   if(selector === "sine"){
+
+  
   stroke(255,255,0);
   strokeWeight(20);
   point(mouseX,mouseY);
@@ -159,7 +173,11 @@ $('#soniDraw').mouseup(function(){
   
   setTimeout(stopRecording, 400);
 
+
   selector = "null";
+
+
+
 } else if(selector === "triangle"){
   stroke(255,255,0);
   strokeWeight(20);
@@ -207,6 +225,8 @@ $('#new').click(function(){
   dropDownArray = [];
 });
 }
+
+
 
 
 
