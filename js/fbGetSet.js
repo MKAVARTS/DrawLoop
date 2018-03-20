@@ -12,9 +12,9 @@ var config;
   firebase.initializeApp(config);
   database = firebase.database();
 
-function saveSketch(){
-  var ref= database.ref('')
-}
+// function saveSketch(){
+//   var ref= database.ref('')
+// }
 
 
 function addSketch(sketch) {

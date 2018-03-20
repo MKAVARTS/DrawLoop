@@ -4,16 +4,16 @@ $(document).ready(function() {
   populateDraw();
 });
 
-var length, cnv;
-var lengthCounter = 0;
-var loopLength = 4;
+var cnv;
+
+
 
 // mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height
 let recordBufferArray = [];
 let dropDownArray = [];
 var w = innerWidth / 1.5;
 var h = w / 2;
-let sine;
+var sine, triangle, sawooth, square;
 let amplitude;
 var selector;
 var noDraw = true;
@@ -23,30 +23,37 @@ var database;
 var cnv;
 
 function preload(){
-  sine = loadSound('../Assets/sounds/Marimba04.wav', callSineLoop);
-  triangle = loadSound('../Assets/sounds/piano.wav', callTriangleLoop);
-  for(var i = 0; i < 16; i++){
-    recordBufferArray[i] =
-      {
-        recorder: new p5.SoundRecorder(),
-        soundFile: new p5.SoundFile(),
-        gain: new p5.Gain
-    }
-  }
+  sine = loadSound('../Assets/sounds/synthy.wav', sineStart);
+  triangle = loadSound('../Assets/sounds/african.wav', triangleStart);
+  sawtooth = loadSound('../Assets/sounds/triangle.wav', sawToothStart);
+  square = loadSound('../Assets/sounds/thumb.wav', squareStart);
+
 }
 
-function callSineLoop(){
-  sine.setVolume(0.0);
-  sine.playMode('restart');
-  sine.loop();
+function sineStart(){
+ sine.setVolume(0.0);
+ sine.playMode("restart");
+ sine.loop();
 }
 
-function callTriangleLoop(){
-  triangle.setVolume(0.0);
-  triangle.playMode('restart');
-  triangle.loop();
+ function triangleStart(){
+ triangle.setVolume(0.0);
+ triangle.playMode("restart");
+ triangle.loop();
+
 }
 
+function sawToothStart(){
+  sawtooth.setVolume(0.0);
+  sawtooth.playMode("restart");
+  sawtooth.loop();
+ }
+
+ function squareStart(){
+  square.setVolume(0.0);
+  square.playMode("restart");
+  square.loop();
+ }
 
 function setup(){
   cnv = createCanvas(w,h);
@@ -56,7 +63,15 @@ function setup(){
   textSize(25);
 
   console.log(recordBufferArray);
-  amplitude = new p5.Amplitude();
+
+  for(var i = 0; i < 16; i++){
+    recordBufferArray[i] =
+      {
+        recorder: new p5.SoundRecorder(),
+        soundFile: new p5.SoundFile(),
+        gain: new p5.Gain
+    }
+  }
 
 }
 
@@ -71,89 +86,119 @@ function draw(){
 
   }
 
-  
+  // mouseDown sine 
   $('#soniDraw').mousedown(function(){
-    if(selector === "sine"){ 
+  if(selector === "sine"){
+    sine.setVolume(0.1, 0.1, 0.05);
     startRecording(sine);
-    stroke(255,0,0);
+
+    stroke(255,255,0);
     strokeWeight(20);
     point(mouseX,mouseY);
-    } else if(selector === "triangle"){
-      startRecording(triangle);
-      strokeWeight(1);
-      fill(random(255), random(100), random(150));
-      rect(mouseX,mouseY, 50,50);
-    }
+
+  }else if(selector === "triangle"){
+
+    startRecording(triangle);
+    triangle.setVolume(0.1, 0.1, 0.05);
+
+    stroke(255,255,0);
+    strokeWeight(20);
+    point(mouseX,mouseY);
+  }else if(selector === "sawtooth"){
+
+    startRecording(sawtooth);
+    sawtooth.setVolume(0.1, 0.1, 0.05);
+
+    stroke(255,255,0);
+    strokeWeight(20);
+    point(mouseX,mouseY);
+  }else if(selector === "square"){
+
+    startRecording(square);
+    square.setVolume(0.1, 0.1, 0.05);
+
+    stroke(255,255,0);
+    strokeWeight(20);
+    point(mouseX,mouseY);
+  }
   });
 
+
+  //mouseIsPressed
   if(mouseIsPressed && selector === "sine"){
-  noDraw === false;
-  lengthCounter++;
-
-  sine.setVolume(0.1, 0.05);
-  sine.rate(map(mouseX, 0, w, 1.5, 2.0));
-
+  // sine.rate(map(mouseX, 0, w, 1.5, 2.0));
   strokeWeight(2);
   stroke(0);
   line(mouseX,mouseY, pmouseX,pmouseY);
 
-}else if(mouseIsPressed && selector === "triangle"){
-  noDraw === false;
-  lengthCounter++;
-  fill(random(255), random(100), random(150));
-  ellipse(mouseX,mouseY, 10,10);
-
-  triangle.setVolume(0.1, 0.05);
-
-  if(lengthCounter % 50 === 0){
-    fill(random(255, random(255), random(255)));
-    ellipse(mouseX, mouseY, 100, 100);
-    triangle.rate(random(2.0));
-  }else{
-    fill(random(255), random(100), random(150));
-    ellipse(mouseX,mouseY, 10, 10);
-    triangle.rate(map(mouseX, 0, w, 1.0, 1.2));
+  }else if(mouseIsPressed && selector === "triangle"){
+    strokeWeight(2);
+    stroke(0);
+    line(mouseX,mouseY, pmouseX,pmouseY);
+  }else if(mouseIsPressed && selector === "sawtooth"){
+    strokeWeight(2);
+    stroke(0);
+    line(mouseX,mouseY, pmouseX,pmouseY);
+  }else if(mouseIsPressed && selector === "square"){
+    strokeWeight(2);
+    stroke(0);
+    line(mouseX,mouseY, pmouseX,pmouseY);
   }
 
-} 
 
-
-
+//mousedUp 
 $('#soniDraw').mouseup(function(){
   if(selector === "sine"){
-  stroke(255,0,0);
+  stroke(255,255,0);
   strokeWeight(20);
   point(mouseX,mouseY);
 
-  sine.setVolume(0.0, 0.1);
+  sine.setVolume(0.0,0.1);
 
   makeModule();
-  stopRecording();
+  
+  setTimeout(stopRecording, 400);
 
-  length = lengthCounter;
-  loopLength = length / 20.00;
-
-  lengthCounter = 0;
   selector = "null";
-
 } else if(selector === "triangle"){
+  stroke(255,255,0);
+  strokeWeight(20);
+  point(mouseX,mouseY);
 
-  strokeWeight(1);
-  fill(random(255), random(100), random(150));
-  rect(mouseX,mouseY, 50,50);
-
-  triangle.setVolume(0.0, 0.05);
+  triangle.setVolume(0.0,0.1);
 
   makeModule();
-  stopRecording();
+  
+  setTimeout(stopRecording, 400);
 
-  length = lengthCounter;
-  loopLength = length / 20.00;
-
-  lengthCounter = 0;
   selector = "null";
-} 
+} else if(selector === "sawtooth"){
+  stroke(255,255,0);
+  strokeWeight(20);
+  point(mouseX,mouseY);
+
+  sawtooth.setVolume(0.0,0.1);
+
+  makeModule();
+  
+  setTimeout(stopRecording, 400);
+
+  selector = "null";
+}else if(selector === "square"){
+  stroke(255,255,0);
+  strokeWeight(20);
+  point(mouseX,mouseY);
+
+  square.setVolume(0.0,0.1);
+
+  makeModule();
+  
+  setTimeout(stopRecording, 400);
+
+  selector = "null";
+}
 });
+
 
 $('#new').click(function(){
   clear();

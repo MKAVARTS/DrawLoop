@@ -106,7 +106,6 @@ $(document).click(function(){
             console.log(Object.keys(sketches));
 
             Object.keys(sketches).forEach(function(item){
-                console.log(sketches[item].drawing);
                 $('#pics').append(
                 `<div class="col-4">
                      <img class="galleryPicture" width=300 height=300 src='${sketches[item].drawing}'/>

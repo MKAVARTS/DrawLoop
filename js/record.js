@@ -1,31 +1,35 @@
 var counter = 0;
-let looper1, looper2,looper3,looper4,looper5, looper6;
+var looper1, looper2,looper3,looper4,looper5, looper6;
 var startLoop1,startLoop2,startLoop3,startLoop4,startLoop5,startLoop6;
+
+var length;
+var lengthCounter = 0;
+let loopLength = 4;
 
 
 looper1 = new p5.SoundLoop(function(timeFromNow){
     recordBufferArray[0].soundFile.play(timeFromNow);
-}, loopLength);
+}, 4);
 
 looper2 = new p5.SoundLoop(function(timeFromNow){
     recordBufferArray[1].soundFile.play(timeFromNow);
-}, loopLength);
+}, 4);
 
 looper3 = new p5.SoundLoop(function(timeFromNow){
     recordBufferArray[2].soundFile.play(timeFromNow);
-}, loopLength);
+}, 4);
 
 looper4 = new p5.SoundLoop(function(timeFromNow){
     recordBufferArray[3].soundFile.play(timeFromNow);
-}, loopLength);
+}, 4);
 
 looper5 = new p5.SoundLoop(function(timeFromNow){
     recordBufferArray[4].soundFile.play(timeFromNow);
-}, loopLength);
+}, 4);
 
 looper6 = new p5.SoundLoop(function(timeFromNow){
     recordBufferArray[5].soundFile.play(timeFromNow);
-}, loopLength);
+}, 4);
 
 
 
@@ -72,13 +76,13 @@ function startRecording(input){
 }
 
 function stopRecording(){
-    setTimeout(stopRecorder, 400);
+   setTimeout(stopRecorder, 100);
 }
 
 function stopRecorder(){
     recordBufferArray[counter].recorder.stop();
     if(counter === 0){
-    startLoop1();
+        startLoop1();
     }else if(counter === 1){
         startLoop2();
     }else if(counter === 2){

@@ -14,8 +14,8 @@ function populateDraw(){
             <div id="vectorImage">
                 <img id="sine" class="toolImage" src='Assets/vectors/sine.png' height="40" width="65">
                 <img id="triangle" class="toolImage" src='Assets/vectors/triangle.png' height="40" width="65">
-                <img id="square" class="toolImage" src='Assets/vectors/sawtooth.png' height="40" width="65">
-                <img id="sawtooh" class="toolImage" src='Assets/vectors/square.png' height="40" width="65">
+                <img id="sawtooth" class="toolImage" src='Assets/vectors/sawtooth.png' height="40" width="65">
+                <img id="square" class="toolImage" src='Assets/vectors/square.png' height="40" width="65">
             </div>
         </div>
         <div id="toolsHeader" class="col">
