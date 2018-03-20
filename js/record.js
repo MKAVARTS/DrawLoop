@@ -5,27 +5,27 @@ var startLoop1,startLoop2,startLoop3,startLoop4,startLoop5,startLoop6;
 
 looper1 = new p5.SoundLoop(function(timeFromNow){
     recordBufferArray[0].soundFile.play(timeFromNow);
-    }, 2);
+}, loopLength);
 
 looper2 = new p5.SoundLoop(function(timeFromNow){
     recordBufferArray[1].soundFile.play(timeFromNow);
-    }, 2);
+}, loopLength);
 
 looper3 = new p5.SoundLoop(function(timeFromNow){
     recordBufferArray[2].soundFile.play(timeFromNow);
-    }, 2);
+}, loopLength);
 
 looper4 = new p5.SoundLoop(function(timeFromNow){
     recordBufferArray[3].soundFile.play(timeFromNow);
-    }, 2);
+}, loopLength);
 
 looper5 = new p5.SoundLoop(function(timeFromNow){
     recordBufferArray[4].soundFile.play(timeFromNow);
-    }, 2);
+}, loopLength);
 
 looper6 = new p5.SoundLoop(function(timeFromNow){
     recordBufferArray[5].soundFile.play(timeFromNow);
-    }, 2);
+}, loopLength);
 
 
 
@@ -72,7 +72,7 @@ function startRecording(input){
 }
 
 function stopRecording(){
-    setTimeout(stopRecorder, 1000);
+    setTimeout(stopRecorder, 400);
 }
 
 function stopRecorder(){

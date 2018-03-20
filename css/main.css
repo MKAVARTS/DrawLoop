@@ -46,8 +46,12 @@ body {
     margin-bottom: 20px;
     text-shadow: 1px 0px 1px #969696;
     -webkit-text-stroke: 1px;
-    -webkit-text-stroke-color: black; }
+    -webkit-text-stroke-color: black; 
+}
 
+h6{
+    font-family: Helvetica;
+}
     footer{
         text-align: left;
         /* background: pink; */
