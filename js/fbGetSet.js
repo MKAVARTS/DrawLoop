@@ -10,11 +10,7 @@ var config;
     messagingSenderId: "967537043822"
   };
   firebase.initializeApp(config);
-  database = firebase.database();
-
-// function saveSketch(){
-//   var ref= database.ref('')
-// }
+  // database = firebase.database();
 
 
 function addSketch(sketch) {

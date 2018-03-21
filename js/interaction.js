@@ -78,7 +78,7 @@ function makeModule(){
     }
 
 
-// ------ GALLERY ----- //
+// ------ SAVE ----- //
 
 $(document).click(function(){
     if(event.target.id === "save"){
@@ -98,6 +98,7 @@ $(document).click(function(){
 })
 
 
+// ------ GALLERY ----- //
 
 $(document).click(function(){
     if(event.target.id === "gallery"){
@@ -115,3 +116,14 @@ $(document).click(function(){
              });
         }
     })
+
+
+// ------ NEW ----- //
+
+
+    $('#new').click(function(){
+        clear();
+        background(0);
+        $('#modules').html('');
+        dropDownArray = [];
+      });

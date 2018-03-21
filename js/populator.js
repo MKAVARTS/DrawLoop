@@ -1,4 +1,8 @@
 
+$(document).ready(function() {
+    populateDraw();
+  });
+
 
 function populateDraw(){
     $('#mainDiv').html(
