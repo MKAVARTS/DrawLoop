@@ -3,7 +3,9 @@ console.log('main.js working');
 
 var cnv;
 
-
+$(document).click(function(){
+  clickTarget = event.target.className;
+})
 
 // mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height
 let recordBufferArray = [];
@@ -20,7 +22,7 @@ var database;
 var cnv;
 var pathRecord;
 
-
+var clickTarget;
 var sound;
 var pathArray = [];
 var recordArray = [];
@@ -68,7 +70,9 @@ function preload(){
 
 
 function mousePressed(){
-  if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){  
+  if(clickTarget === "user"){
+
+  }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){  
     path = new pathStore();
     startRecording(eval(selector), arrayIndex);
     console.log('start recording');
@@ -95,7 +99,11 @@ this.update = function(x,y){
 
 
 function mouseReleased(){
-  if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
+  if(clickTarget === "user"){
+
+  }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
+  makeModule(selector);
+  eval(selector).setVolume(0.0, 0.1);
   pathArray.push(path);
   console.log(pathArray);
   console.log("end recording");
@@ -113,6 +121,7 @@ function mouseReleased(){
 function setup(){
   cnv = createCanvas(w,h);
   cnv.parent('soniDraw');
+  pixelDensity(1);
   background(255); 
   textSize(25);
 
@@ -134,25 +143,25 @@ function setup(){
 function startRecording(input, index){
   recordArray[index].recorder.setInput(input);
   recordArray[index].recorder.record(recordArray[index].recording);
-  input.setVolume(0.5, 0.1);
+  sine.setVolume(0.5, 0.1);
 }
 
 function stopRecording(index){
-  makeModule(selector);
   console.log("arrayIndex", index);
-  eval(selector).setVolume(0.0,0.02);
   setTimeout(function(){
-  recordArray[index].recorder.stop();
-  if(index === 0){
-  looper1.start(0.1);
-  }else if(index === 1){
-  looper2.syncedStart(looper1);
+    recordArray[index].recorder.stop();
+    if(index === 0){
+    looper1.start(0.5, 0.1);
   }
-  else if(index === 2){
-    looper3.syncedStart(looper2);
-    }
-}, 200);
+  // }else if(index === 1){
+  // looper2.syncedStart(looper1);
+  // }
+  // else if(index === 2){
+  //   looper3.syncedStart(looper2);
+  //   }
+})
 }
+
 
 // ----------------DRAWLOOP ----------------------//
 
@@ -167,35 +176,32 @@ function draw(){
   }
   if(mouseIsPressed){
     if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
-    if(selector === "sine"){
     path.update(mouseX,mouseY);
-    sine.rate(1.0);
+    // eval(selector).rate(map(mouseX, 0, w, 0.5, 2.5));
     stroke(0);
     line(mouseX,mouseY, pmouseX, pmouseY);
-    }
-} if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
-  if(selector === "triangle"){
-  path.update(mouseX,mouseY);
-  sine.rate(1.0);
-  stroke(0);
-  line(mouseX,mouseY, pmouseX, pmouseY);
-  }
-} if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
-  if(selector === "sawtooth"){
-  path.update(mouseX,mouseY);
-  sine.rate(1.0);
-  stroke(0);
-  line(mouseX,mouseY, pmouseX, pmouseY);
-  }
+// } if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
+//   if(selector === "triangle"){
+//   path.update(mouseX,mouseY);
+//   sine.rate(1.0);
+//   stroke(0);
+//   line(mouseX,mouseY, pmouseX, pmouseY);
+//   }
+// } if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
+//   if(selector === "sawtooth"){
+//   path.update(mouseX,mouseY);
+//   sine.rate(1.0);
+//   stroke(0);
+//   line(mouseX,mouseY, pmouseX, pmouseY);
+//   }
 }
 }
-for(var i = 0; i < pathArray.length; i++){
-    if(canDraw === true){
-    pathArray[i].show();
-    }
+// for(var i = 0; i < pathArray.length; i++){
+//     if(canDraw === true){
+//     pathArray[i].show();
+//     }
 }
 
-}
 
 
 

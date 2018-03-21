@@ -102,6 +102,8 @@ $(document).click(function(){
 
 $(document).click(function(){
     if(event.target.id === "gallery"){
+        masterVolume(0.0, 0.1);
+        setTimeout(function(){
         populateGallery();
         getSketch().then((sketches) =>{
             console.log(sketches);
@@ -109,13 +111,16 @@ $(document).click(function(){
 
             Object.keys(sketches).forEach(function(item){
                 $('#pics').append(
-                `<div class="col-4">
-                     <img class="galleryPicture" width=300 height=300 src='${sketches[item].drawing}'/>
+                `<div class="row">
+                    <div class="col">
+                         <img class="galleryPicture" width=500 height=300 src='${sketches[item].drawing}'/>
+                    </div>
                 </div>`);
             })
              });
-        }
-    })
+        }, 200);
+}
+})
 
 
 // ------ NEW ----- //
@@ -127,3 +132,4 @@ $(document).click(function(){
         $('#modules').html('');
         dropDownArray = [];
       });
+

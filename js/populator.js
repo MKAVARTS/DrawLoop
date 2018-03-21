@@ -17,13 +17,14 @@ function populateDraw(){
             </div>
             <div id="vectorImage">
                 <img id="sine" class="toolImage" src='Assets/vectors/sine.png' height="40" width="65">
+                <caption>line draw</caption>
                 <img id="triangle" class="toolImage" src='Assets/vectors/triangle.png' height="40" width="65">
                 <img id="sawtooth" class="toolImage" src='Assets/vectors/sawtooth.png' height="40" width="65">
                 <img id="square" class="toolImage" src='Assets/vectors/square.png' height="40" width="65">
             </div>
         </div>
         <div id="toolsHeader" class="col">
-            <button class="user" id="info"> ? </button>
+        <button type="button" class="user" data-toggle="modal" data-target="#exampleModalCenter">? </button>
             <button class="user" id="save"> S </button>
             <button class="user" id="gallery"> G </button>
             <button class="user" id="new"> N </button>

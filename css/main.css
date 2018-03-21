@@ -214,3 +214,8 @@ h6{
     padding-right: 0;
     padding-left: 0;
   }
+
+
+  .modal-body{
+      color: black;
+  }
