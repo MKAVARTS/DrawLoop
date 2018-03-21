@@ -14,12 +14,13 @@
 
 looper1 = new p5.SoundLoop(function(timeFromNow){
     recordArray[0].recording.play(timeFromNow);
+    recordArray[0].recording.play(timeFromNow);
     //     for(var i = 0; i < pathArray[0].history.length; i++){
     //         var pos = pathArray[0].history[i];
     //         fill(255,0,0);
     //         ellipse(pos.x,pos.y, random(10), random(10));
     // }
-    }, 1);
+    }, 4);
 
 looper2 = new p5.SoundLoop(function(timeFromNow){
     recordArray[1].recording.play(timeFromNow);
@@ -28,7 +29,7 @@ looper2 = new p5.SoundLoop(function(timeFromNow){
     //         fill(0,255,0);
     //         ellipse(pos.x,pos.y, random(10), random(10));
     // }
-    }, 3);
+    }, 4);
 
 looper3 = new p5.SoundLoop(function(timeFromNow){
     recordArray[2].recording.play(timeFromNow);

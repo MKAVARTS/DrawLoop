@@ -72,9 +72,12 @@ function preload(){
 function mousePressed(){
   if(clickTarget === "user"){
 
-  }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){  
+  }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
+    var source = eval(selector);
+    setTimeout(function(){
+      startRecording(source, arrayIndex);  
+    }, 25);
     path = new pathStore();
-    startRecording(eval(selector), arrayIndex);
     console.log('start recording');
   }
 }
@@ -103,8 +106,8 @@ function mouseReleased(){
 
   }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
   makeModule(selector);
-  eval(selector).setVolume(0.0, 0.1);
   pathArray.push(path);
+  eval(selector).setVolume(0.0, 0.01);
   console.log(pathArray);
   console.log("end recording");
   stopRecording(arrayIndex);
@@ -143,7 +146,7 @@ function setup(){
 function startRecording(input, index){
   recordArray[index].recorder.setInput(input);
   recordArray[index].recorder.record(recordArray[index].recording);
-  sine.setVolume(0.5, 0.1);
+  eval(selector).setVolume(0.2, 0.05);
 }
 
 function stopRecording(index){
@@ -151,15 +154,14 @@ function stopRecording(index){
   setTimeout(function(){
     recordArray[index].recorder.stop();
     if(index === 0){
-    looper1.start(0.5, 0.1);
+    looper1.start();
+  }else if(index === 1){
+  looper2.start();
   }
-  // }else if(index === 1){
-  // looper2.syncedStart(looper1);
-  // }
-  // else if(index === 2){
-  //   looper3.syncedStart(looper2);
-  //   }
-})
+  else if(index === 2){
+    looper3.start();
+    }
+}, 200);
 }
 
 
@@ -174,36 +176,17 @@ function draw(){
      resizeCanvas(w,h);
 
   }
-  if(mouseIsPressed){
+  if(mouseIsPressed){ 
     if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
     path.update(mouseX,mouseY);
-    // eval(selector).rate(map(mouseX, 0, w, 0.5, 2.5));
     stroke(0);
     line(mouseX,mouseY, pmouseX, pmouseY);
-// } if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
-//   if(selector === "triangle"){
-//   path.update(mouseX,mouseY);
-//   sine.rate(1.0);
-//   stroke(0);
-//   line(mouseX,mouseY, pmouseX, pmouseY);
-//   }
-// } if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
-//   if(selector === "sawtooth"){
-//   path.update(mouseX,mouseY);
-//   sine.rate(1.0);
-//   stroke(0);
-//   line(mouseX,mouseY, pmouseX, pmouseY);
-//   }
+    }
+  }
+  for(var i = 0; i < pathArray.length; i++){
+    pathArray[i].show();
+  }
 }
-}
-// for(var i = 0; i < pathArray.length; i++){
-//     if(canDraw === true){
-//     pathArray[i].show();
-//     }
-}
-
-
-
 
 
 $('#new').click(function(){

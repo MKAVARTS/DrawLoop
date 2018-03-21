@@ -104,6 +104,9 @@ $(document).click(function(){
     if(event.target.id === "gallery"){
         masterVolume(0.0, 0.1);
         setTimeout(function(){
+        recordArray = [];
+        arrayIndex = 0;
+        selector = "null";
         populateGallery();
         getSketch().then((sketches) =>{
             console.log(sketches);
