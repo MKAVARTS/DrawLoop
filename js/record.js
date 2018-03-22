@@ -3,9 +3,30 @@
 // ----------RECORD FUNCTIONS----------------------//
 
 
+//starting recording, takes selector and recording array index 
+function startRecording(input, index){
+    console.log(index);
+    recordArray[index].recorder.setInput(input);
+    recordArray[index].recorder.record(recordArray[index].recording);
+    eval(selector).setVolume(0.2, 0.05);
+  }
+  
 
-
-
+  // stops recording, takes index to specify which looper to start. 
+  function stopRecording(index){
+    console.log("arrayIndex", index);
+    setTimeout(function(){
+      recordArray[index].recorder.stop();
+      if(index === 0){
+      looper1.start();
+    }else if(index === 1){
+    looper2.start();
+    }
+    else if(index === 2){
+      looper3.start();
+      }
+  }, 200);
+  }
 
 
 // ----------LOOPERS FOR RECORD ARRAY----------------------//

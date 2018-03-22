@@ -4,13 +4,14 @@
 body {
     margin: 0;
     padding: 0;
+    border-collapse: collapse;
     font-family: mono45-headline, monospace, Helvetica;
     background-color: #404040;
     color: white; 
 }
   
   h1 {
-    font-size: 4.5em;
+    font-size: 3.5em;
     margin-top: 75px;
     margin-bottom: 2px;
     -webkit-text-stroke: 2px;
@@ -20,7 +21,7 @@ body {
   
   h3 {
     font-family: Helvetica;
-    font-size: 1em;
+    font-size: 0.75em;
     margin-top: 2px;
     letter-spacing: 5px;
 
@@ -28,7 +29,7 @@ body {
 }
   
   h4 {
-    font-size: 3em;
+    font-size: 2em;
     margin-top: 15px;
     letter-spacing: 5px;
     text-shadow: 1px 0px 1px #969696;
@@ -40,7 +41,7 @@ body {
   
   h5 {
     /* background-color: red; */
-    font-size: 2em;
+    font-size: 1.5em;
     letter-spacing: 5px;
     margin-top: 30px;
     margin-bottom: 20px;
@@ -62,13 +63,13 @@ h6{
         margin-bottom: 20px; 
     }
 
-    .container-fluid{
+    /* .container-fluid{
         /* margin-top: auto; */
         /* margin-bottom: 25%; */
-        margin: 50px;
+        /* margin: 50px; */
 
         /* background-color: blue; */
-    }
+
 
 
 

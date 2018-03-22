@@ -31,14 +31,13 @@ var arrayIndex = 0;
 var looper1, looper2;
 var canDraw = false;
 var path;
-// var w = 900;
-// var h = 600;
 var looper1, looper2, looper3, looper4;
 
 
 // ----------PRELOAD SOUNDS----------------------//
 
 function preload(){
+  masterVolume(0.0);
   sine = loadSound('../Assets/sounds/synthy.wav', function(){
     sine.setVolume(0.0);
     sine.playMode("restart");
@@ -58,10 +57,27 @@ function preload(){
     square.setVolume(0.0);
     square.playMode("restart");
     square.loop();
+
+    masterVolume(1.0);
   });
+
 }
 
-
+//populates an array with an object at each index
+// containing a recorder function,
+// and a gain function. 
+function populateRecordArray(){
+for(var i = 0; i < 4; i++){
+  recordArray.push(
+      {
+          recorder: new p5.SoundRecorder(),
+          recording: new p5.SoundFile(),
+          gain: new p5.Gain()
+      }
+  );
+  console.log("recordArray", recordArray);  
+}
+}
 
 
 
@@ -69,19 +85,8 @@ function preload(){
 
 
 
-function mousePressed(){
-  if(clickTarget === "user"){
-
-  }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
-    var source = eval(selector);
-    setTimeout(function(){
-      startRecording(source, arrayIndex);  
-    }, 25);
-    path = new pathStore();
-    console.log('start recording');
-  }
-}
-
+//this function is called every time a user draws
+// to store the points of the draw path. 
 function pathStore(x,y){
   this.history = [];
 
@@ -101,10 +106,36 @@ this.update = function(x,y){
 }
 
 
-function mouseReleased(){
+
+
+
+// ---------- MOUSE PRESS AND RELEASE  ----------------------//
+
+
+// this function starts a recording and a new pathStore function 
+// to record points into, if the mouse press is on the canvas, 
+// and isn't clicking on a menu pop-up with a "user" class. 
+function mousePressed(){
   if(clickTarget === "user"){
 
   }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
+    var source = eval(selector);
+    setTimeout(function(){
+      startRecording(source, arrayIndex);  
+    }, 25);
+    path = new pathStore();
+    console.log('start recording');
+  }
+}
+
+
+//this function ends the recording and pushes the path into an array  
+// if the mouse press is on the canvas, 
+// and isn't clicking on a menu pop-up with a "user" class. 
+function mouseReleased(){
+  if(clickTarget === "user"){
+
+  }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null"){
   makeModule(selector);
   pathArray.push(path);
   eval(selector).setVolume(0.0, 0.01);
@@ -112,13 +143,14 @@ function mouseReleased(){
   console.log("end recording");
   stopRecording(arrayIndex);
   arrayIndex++;
+  selector = "null";
   }
   canDraw === true;
 }
 
 
 
-// ----------------SETUP AND CREATE RECORD ARRAY ----------------------//
+// ----------------SETUP ----------------------//
 
 
 function setup(){
@@ -128,41 +160,10 @@ function setup(){
   background(255); 
   textSize(25);
 
-  for(var i = 0; i < 4; i++){
-    recordArray.push(
-        {
-            recorder: new p5.SoundRecorder(),
-            recording: new p5.SoundFile(),
-            gain: new p5.Gain()
-        }
-    );
-    console.log("recordArray", recordArray);  
-}
-
+  populateRecordArray();
 }
 
 
-
-function startRecording(input, index){
-  recordArray[index].recorder.setInput(input);
-  recordArray[index].recorder.record(recordArray[index].recording);
-  eval(selector).setVolume(0.2, 0.05);
-}
-
-function stopRecording(index){
-  console.log("arrayIndex", index);
-  setTimeout(function(){
-    recordArray[index].recorder.stop();
-    if(index === 0){
-    looper1.start();
-  }else if(index === 1){
-  looper2.start();
-  }
-  else if(index === 2){
-    looper3.start();
-    }
-}, 200);
-}
 
 
 // ----------------DRAWLOOP ----------------------//
@@ -188,13 +189,6 @@ function draw(){
   }
 }
 
-
-$('#new').click(function(){
-  clear();
-  background(0);
-  $('#modules').html('');
-  dropDownArray = [];
-});
 
 
 

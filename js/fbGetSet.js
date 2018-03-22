@@ -13,6 +13,9 @@ var config;
   // database = firebase.database();
 
 
+
+
+  // add sketches to firebase 
 function addSketch(sketch) {
 	return $.ajax({
       url: `${config.databaseURL}/sketch.json`,
@@ -24,6 +27,8 @@ function addSketch(sketch) {
    });
 }
 
+
+  // get sketches from firebase 
 function getSketch() {
   console.log('trying to get sketches');
  return $.ajax({

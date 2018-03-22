@@ -3,6 +3,9 @@ var sketch;
 
 // --------- TOOLS -------- //
 
+
+
+// tool selector by image id
 $(document).click(() => {
     if(event.target.className === "toolImage"){
     console.log("a click on tool ", event.target.id);
@@ -80,6 +83,8 @@ function makeModule(){
 
 // ------ SAVE ----- //
 
+
+// saves picture of canavs with .toDataURL and pushes sketch to firebase add function 
 $(document).click(function(){
     if(event.target.id === "save"){
     canvas = document.getElementById('defaultCanvas0');
@@ -100,8 +105,9 @@ $(document).click(function(){
 
 // ------ GALLERY ----- //
 
-$(document).click(function(){
-    if(event.target.id === "gallery"){
+
+// clears HTML and javascript and populates from firebase 
+$('#populateGallery').click(function(){
         masterVolume(0.0, 0.1);
         setTimeout(function(){
         recordArray = [];
@@ -122,17 +128,34 @@ $(document).click(function(){
             })
              });
         }, 200);
-}
 })
 
 
 // ------ NEW ----- //
 
 
-    $('#new').click(function(){
+//clears HTML and dropdown menus 
+$('#new').click(function(){
+    clear();
+    background(0);
+    $('#modules').html('');
+    dropDownArray = [];
+  });
+
+//clears javascript arrays and handles audio 
+    $('#deleteDrawing').click(function(){
+        masterVolume(0.0, 0.1);
         clear();
-        background(0);
+        background(255);
         $('#modules').html('');
         dropDownArray = [];
+        pathArray = [];
+        recordArray = [];
+        arrayIndex = 0;
+        looper1.stop();
+        looper2.stop();
+        looper3.stop();
+        looper4.stop();
+        populateRecordArray();
       });
 
