@@ -48,12 +48,14 @@ function preload(){
     triangle.playMode("restart");
     triangle.loop();
   });
-  sawtooth = loadSound('../Assets/sounds/triangle.wav', function(){
+  sawtooth = loadSound('../Assets/sounds/african.wav', function(){
+    // sawtooth.rate(2.0);
     sawtooth.setVolume(0.0);
     sawtooth.playMode("restart");
     sawtooth.loop();
   });
   square = loadSound('../Assets/sounds/thumb.wav', function(){
+    square.rate(0.5);
     square.setVolume(0.0);
     square.playMode("restart");
     square.loop();
@@ -99,6 +101,7 @@ this.update = function(x,y){
       for(var i = 0; i < this.history.length; i++){
           var pos = this.history[i];
           stroke(0);
+          fill(random(255));
           ellipse(pos.x,pos.y, 10, 10);
   
       }
@@ -119,6 +122,7 @@ function mousePressed(){
   if(clickTarget === "user"){
 
   }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
+    masterVolume(1.0, 0.01);
     var source = eval(selector);
     setTimeout(function(){
       startRecording(source, arrayIndex);  
@@ -180,13 +184,14 @@ function draw(){
   if(mouseIsPressed){ 
     if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
     path.update(mouseX,mouseY);
+    strokeWeight(1);
     stroke(0);
     line(mouseX,mouseY, pmouseX, pmouseY);
     }
   }
-  for(var i = 0; i < pathArray.length; i++){
-    pathArray[i].show();
-  }
+  // for(var i = 0; i < pathArray.length; i++){
+  //   pathArray[i].show();
+  // }
 }
 
 
