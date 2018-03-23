@@ -1,4 +1,4 @@
-var sketch;
+var sketch, randomID, looper1, looper2, looper3, looper4;
 
 
 // --------- TOOLS -------- //
@@ -31,11 +31,30 @@ $(document).click(()=>{
                      console.log("ID of deleted item", dropDownArray[i].id);
                      dropDownArray.splice([i], 1);
                      reprintModules();
+                     clear();
+                     background(255);
                      break;
                  }
+             
+    }   
+             for(var i = 0; i < pathArray.length; i++){
+                var buttonID = parseFloat(event.target.id);
+                 if(pathArray[i].id === buttonID){
+                    //  var index = parseInt([i]);
+                    (eval(`looper${buttonID}`).stop());
+                     recordArray[buttonID].recording.stop();
+                     recordArray[buttonID].filled = false;
+                     pathArray.splice([i], 1);
+                     console.log("AT DELETE - stop this looper: ", buttonID);
+                     console.log("AT DELETE - arrayIndex, delete module: ", buttonID);
+                     console.log("AT DELETE - pathArray", pathArray);
+                     console.log("AT DELETE - dropDownArray", dropDownArray);
+                     console.log("AT DELETE - recording array: ", recordArray);
+
+                }
              }
-         }
-    });
+    }
+});
 
 
 
@@ -55,12 +74,13 @@ function reprintModules(){
 // ------ CANVAS ----- //
 
 // make modules after drawing shape on canvas
-function makeModule(){
-      var randomID = Math.random();
-      var dropDownModule = `<div class="dropdown">
+function makeModule(type, index){
+      console.log("makeModule arrayIndex", index);
+    //   randomID = Math.random();
+      var dropDownModule = `<div class="dropdown"> 
       <button style="height:40;width:75%" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <img class="toolImage" src='../Assets/vectors/${selector}.png' height="15" width="40">
-      <button id=${randomID} class="delete" type="button"> X </button>
+      <img class="toolImage" src='../Assets/vectors/${type}.png' height="15" width="40">
+      <button id=${index} class="delete" type="button"> X </button>
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <label>Effect 1</label>
@@ -74,7 +94,7 @@ function makeModule(){
       dropDownArray.push(
         {
           module: dropDownModule,
-          id: randomID
+          id: index
         }
       );
       $('#modules').append(dropDownModule);

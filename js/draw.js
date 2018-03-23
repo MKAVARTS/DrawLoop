@@ -14,9 +14,10 @@ var w = innerWidth / 1.5;
 var h = w / 2;
 var sine, triangle, sawooth, square;
 let amplitude;
-var selector;
+var selector = "null";
 var noDraw = true;
-var startRecording, stopRecording, playbackRecording, stopRecorder;
+var ifIndexFilled = true;
+var startRecording, stopRecording, playbackRecording, stopRecorder, checkRecording;
 var startLooper, startLooping;
 var database;
 var cnv;
@@ -25,12 +26,13 @@ var pathRecord;
 var clickTarget;
 var sound;
 var pathArray = [];
+var updatePath;
 var recordArray = [];
 var points = [];
-var arrayIndex = 0;
+var arrayIndex;
 var looper1, looper2;
 var canDraw = false;
-var path;
+var path = new pathStore();
 var looper1, looper2, looper3, looper4;
 
 
@@ -74,7 +76,8 @@ for(var i = 0; i < 4; i++){
       {
           recorder: new p5.SoundRecorder(),
           recording: new p5.SoundFile(),
-          gain: new p5.Gain()
+          gain: new p5.Gain(),
+          filled: false
       }
   );
   console.log("recordArray", recordArray);  
@@ -118,17 +121,17 @@ this.update = function(x,y){
 // this function starts a recording and a new pathStore function 
 // to record points into, if the mouse press is on the canvas, 
 // and isn't clicking on a menu pop-up with a "user" class. 
+
+
 function mousePressed(){
   if(clickTarget === "user"){
 
-  }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
+  }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null"){
     masterVolume(1.0, 0.01);
     var source = eval(selector);
     setTimeout(function(){
-      startRecording(source, arrayIndex);  
+    checkRecording(source);  
     }, 25);
-    path = new pathStore();
-    console.log('start recording');
   }
 }
 
@@ -140,13 +143,18 @@ function mouseReleased(){
   if(clickTarget === "user"){
 
   }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null"){
-  makeModule(selector);
-  pathArray.push(path);
+  pathArray.push(
+    {
+      drawing: path,
+      id: arrayIndex
+  }
+
+  );
   eval(selector).setVolume(0.0, 0.01);
   console.log(pathArray);
   console.log("end recording");
   stopRecording(arrayIndex);
-  arrayIndex++;
+  console.log("arrayIndex, mouseRelease:", arrayIndex);
   selector = "null";
   }
   canDraw === true;
@@ -160,14 +168,11 @@ function mouseReleased(){
 function setup(){
   cnv = createCanvas(w,h);
   cnv.parent('soniDraw');
-  pixelDensity(1);
   background(255); 
   textSize(25);
 
   populateRecordArray();
 }
-
-
 
 
 // ----------------DRAWLOOP ----------------------//
@@ -177,26 +182,30 @@ function draw(){
   function windowResized() {
      w = innerWidth / 1.5;
      h = newW / 2;
-
      resizeCanvas(w,h);
-
   }
+
+
   if(mouseIsPressed){ 
-    if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h){
+  setTimeout(updatePath, 200);
+    function updatePath(){
+    if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null"){
     path.update(mouseX,mouseY);
     strokeWeight(1);
     stroke(0);
     line(mouseX,mouseY, pmouseX, pmouseY);
+      }
     }
   }
-  // for(var i = 0; i < pathArray.length; i++){
-  //   pathArray[i].show();
-  // }
+
+  for(var i = 0; i < pathArray.length; i++){
+    pathArray[i].drawing.show();
+  }
 }
 
 
 
-
+ 
 
 
 
