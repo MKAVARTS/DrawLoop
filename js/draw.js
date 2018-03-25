@@ -31,10 +31,10 @@ var recordArray = [];
 var points = [];
 var arrayIndex;
 var looper1, looper2;
-var canDraw = false;
+var canDraw = true;
 var path = new pathStore();
 var looper1, looper2, looper3, looper4;
-
+var fillCount = 0;
 
 // ----------PRELOAD SOUNDS----------------------//
 
@@ -71,13 +71,15 @@ function preload(){
 // containing a recorder function,
 // and a gain function. 
 function populateRecordArray(){
-for(var i = 0; i < 4; i++){
+for(var i = 0; i < 8; i++){
   recordArray.push(
       {
           recorder: new p5.SoundRecorder(),
           recording: new p5.SoundFile(),
-          gain: new p5.Gain(),
-          filled: false
+          filled: false,
+          type: false,
+          id: false,
+          drawing: new pathStore()
       }
   );
   console.log("recordArray", recordArray);  
@@ -100,15 +102,42 @@ this.update = function(x,y){
   this.history.push(v);
 }
 
-  this.show = function(){
+  this.showSine = function(){
       for(var i = 0; i < this.history.length; i++){
-          var pos = this.history[i];
+      var pos = this.history[i];
           stroke(0);
-          fill(random(255));
+          strokeWeight(1);
+          fill(255,255,0);
           ellipse(pos.x,pos.y, 10, 10);
-  
       }
   }
+  this.showTriangle = function(){
+    for(var i = 0; i < this.history.length; i++){
+    var pos = this.history[i];
+        stroke(0);
+        strokeWeight(1);
+        fill(0,0,255);
+        ellipse(pos.x,pos.y, 10, 10);
+    }
+  }
+    this.showSaw = function(){
+      for(var i = 0; i < this.history.length; i++){
+      var pos = this.history[i];
+          stroke(0);
+          strokeWeight(1);
+          fill(0,255,0);
+          ellipse(pos.x,pos.y, 10, 10);
+      }
+    }
+      this.showSquare = function(){
+        for(var i = 0; i < this.history.length; i++){
+        var pos = this.history[i];
+            stroke(0);
+            strokeWeight(1);
+            fill(255,0,0);
+            ellipse(pos.x,pos.y, 10, 10);
+        }
+}
 }
 
 
@@ -126,7 +155,7 @@ this.update = function(x,y){
 function mousePressed(){
   if(clickTarget === "user"){
 
-  }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null"){
+  }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null" && canDraw === true){
     masterVolume(1.0, 0.01);
     var source = eval(selector);
     setTimeout(function(){
@@ -143,19 +172,19 @@ function mouseReleased(){
   if(clickTarget === "user"){
 
   }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null"){
-  pathArray.push(
-    {
-      drawing: path,
-      id: arrayIndex
-  }
+  // pathArray.push(
+  //   {
+  //     drawing: path,
+  //     id: arrayIndex,
+  //     type: selector
+  // }
 
-  );
+  // );
   eval(selector).setVolume(0.0, 0.01);
   console.log(pathArray);
   console.log("end recording");
   stopRecording(arrayIndex);
   console.log("arrayIndex, mouseRelease:", arrayIndex);
-  selector = "null";
   }
   canDraw === true;
 }
@@ -187,6 +216,13 @@ function draw(){
 
 
   if(mouseIsPressed){ 
+    if(fillCount > 8){
+      canDraw === false;
+  }else if(fillCount <= 8){
+    canDraw === true;
+  }
+
+  if(canDraw === true){
   setTimeout(updatePath, 200);
     function updatePath(){
     if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null"){
@@ -197,9 +233,21 @@ function draw(){
       }
     }
   }
+}
 
-  for(var i = 0; i < pathArray.length; i++){
-    pathArray[i].drawing.show();
+  for(var i = 0; i < recordArray.length; i++){
+    if(recordArray[i].type === "sine" && recordArray[i].type != false){
+    recordArray[i].drawing.showSine();
+    }
+    if(recordArray[i].type === "triangle" && recordArray[i].type != false){
+      recordArray[i].drawing.showTriangle();
+      }
+      if(recordArray[i].type === "sawtooth" && recordArray[i].type != false){
+        recordArray[i].drawing.showSaw();
+        }
+        if(recordArray[i].type === "square" && recordArray[i].type != false){
+          recordArray[i].drawing.showSquare();
+          }
   }
 }
 

@@ -10,7 +10,7 @@ $(document).click(() => {
     if(event.target.className === "toolImage"){
     console.log("a click on tool ", event.target.id);
     selector = event.target.id;
-
+    console.log("selector: " , selector);
     }
   });
 
@@ -37,14 +37,18 @@ $(document).click(()=>{
                  }
              
     }   
-             for(var i = 0; i < pathArray.length; i++){
+             for(var i = 0; i < recordArray.length; i++){
                 var buttonID = parseFloat(event.target.id);
-                 if(pathArray[i].id === buttonID){
+                 if(recordArray[i].id === buttonID){
                     //  var index = parseInt([i]);
+                    recordArray[buttonID].recording.stop();
                     (eval(`looper${buttonID}`).stop());
-                     recordArray[buttonID].recording.stop();
                      recordArray[buttonID].filled = false;
-                     pathArray.splice([i], 1);
+                     recordArray[buttonID].drawing.history = [];
+                     recordArray[buttonID].type = false;
+                     fillCount--;
+
+                     console.log("AT DELETE - fillCount : ", fillCount);
                      console.log("AT DELETE - stop this looper: ", buttonID);
                      console.log("AT DELETE - arrayIndex, delete module: ", buttonID);
                      console.log("AT DELETE - pathArray", pathArray);
@@ -155,12 +159,12 @@ $('#populateGallery').click(function(){
 
 
 //clears HTML and dropdown menus 
-$('#new').click(function(){
-    clear();
-    background(0);
-    $('#modules').html('');
-    dropDownArray = [];
-  });
+// $('#new').click(function(){
+//     clear();
+//     background(0);
+//     $('#modules').html('');
+//     dropDownArray = [];
+//   });
 
 //clears javascript arrays and handles audio 
     $('#deleteDrawing').click(function(){
@@ -172,10 +176,10 @@ $('#new').click(function(){
         pathArray = [];
         recordArray = [];
         arrayIndex = 0;
+        looper0.stop();
         looper1.stop();
         looper2.stop();
         looper3.stop();
-        looper4.stop();
         populateRecordArray();
       });
 
