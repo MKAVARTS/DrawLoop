@@ -47,8 +47,12 @@ $(document).click(()=>{
                      recordArray[buttonID].drawing.history = [];
                      recordArray[buttonID].type = false;
                      fillCount--;
+                     if(fillCount < 8 ){
+                         canDraw = true;
+                     }
 
                      console.log("AT DELETE - fillCount : ", fillCount);
+                     console.log("AT DELETE - canDraw? : ", canDraw);
                      console.log("AT DELETE - stop this looper: ", buttonID);
                      console.log("AT DELETE - arrayIndex, delete module: ", buttonID);
                      console.log("AT DELETE - pathArray", pathArray);

@@ -71,7 +71,7 @@ function preload(){
 // containing a recorder function,
 // and a gain function. 
 function populateRecordArray(){
-for(var i = 0; i < 8; i++){
+for(var i = 0; i <= 8; i++){
   recordArray.push(
       {
           recorder: new p5.SoundRecorder(),
@@ -171,7 +171,7 @@ function mousePressed(){
 function mouseReleased(){
   if(clickTarget === "user"){
 
-  }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null"){
+  }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null" && canDraw === true){
   // pathArray.push(
   //   {
   //     drawing: path,
@@ -186,7 +186,7 @@ function mouseReleased(){
   stopRecording(arrayIndex);
   console.log("arrayIndex, mouseRelease:", arrayIndex);
   }
-  canDraw === true;
+  // canDraw === true;
 }
 
 
@@ -207,6 +207,8 @@ function setup(){
 // ----------------DRAWLOOP ----------------------//
 
 function draw(){
+
+
 
   function windowResized() {
      w = innerWidth / 1.5;

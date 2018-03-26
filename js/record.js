@@ -15,6 +15,9 @@ function startRecording(input, index){
   
 
 function checkRecording(){
+    if(fillCount >= 8){
+        console.log("fillCount is >= 8, not recording");
+    }else if(fillCount < 8){
     for(var i = 0; i < recordArray.length; i++){
         if(recordArray[i].filled === false){
             path = new pathStore();
@@ -23,6 +26,7 @@ function checkRecording(){
             console.log("check recording, arrayIndex", arrayIndex);
             makeModule(selector, arrayIndex);
             break;
+        }
 
     }
 }
@@ -97,7 +101,7 @@ looper0 = new p5.SoundLoop(function(timeFromNow){
             vertex(pos.x,pos.y);
             endShape();
         }
-    }
+    } 
 }, 2);
 
 looper1 = new p5.SoundLoop(function(timeFromNow){
