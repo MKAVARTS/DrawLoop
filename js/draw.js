@@ -34,11 +34,7 @@ var canDraw = true;
 var path = new pathStore();
 var looper0,looper1, looper2, looper3, looper4;
 var fillCount = 0;
-var index0Slider1;
-var setSlider = false;
-var canDrawLooper0 = false;
-var intervalUpdate0 = 4;
-var zeroInterval;
+
 
 // ----------PRELOAD SOUNDS----------------------//
 
@@ -216,14 +212,18 @@ function setup(){
 function draw(){
 
 
-  // $('.dropdown-item').click(function(){
-  //   // console.log('can see the slider value');
-  //   // console.log($('#0effect2').val());
+  $('.dropdown-item').mouseup(function(){
+    var amps = $('#0effect2').val();
+    console.log(amps);
+    setTimeout(updateSlider(parseFloat(amps)), 100);
+  });
 
-  //   for(var i = 0; i < dropDownArray.length; i++){
 
-  //   }
-  // });
+function updateSlider(amount){
+  console.log(amount);
+  looper0.interval = amount;
+// recordArray[0].recording.setVolume(amount);
+}
 
   function windowResized() {
      w = innerWidth / 1.5;
@@ -231,8 +231,7 @@ function draw(){
      resizeCanvas(w,h);
   }
 
-  if(canDraw === true){
-    for(var i = 0; i < recordArray.length; i++){
+    for(var i = 0; i < dropDownArray.length; i++){
       recordArray[i].recording.rate(($(`#${i}effect1`).val()));
     }
 
@@ -269,8 +268,7 @@ function draw(){
         if(recordArray[i].type === "square" && recordArray[i].type != false){
           recordArray[i].drawing.showSquare();
           }
-  }
-  }
+    }
 }
 
 

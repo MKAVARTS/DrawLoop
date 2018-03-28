@@ -92,11 +92,11 @@ function makeModule(type, index){
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <label>Effect 1</label>
-        <input id='${index}effect1' type="range" value="1" min="-4" max="4" step= "1" class="dropdown-item">
+        <input id='${index}effect1' type="range" value="1" min="-4" max="4" step= "1" class="dropdown-item" class="effectSlider">
         <label>Effect 2</label>
-        <input id='${index}effect2' type="range" min="1" max="4" step ="1" value="4" class="dropdown-item">
+        <input id='${index}effect2' type="range" min="0.1" max="4.0" step ="0.1" value="4.0" class="dropdown-item" class="effectSlider">
         <label>Effect 3</label>
-        <input id='${index}effect3' type="range" min="-10" max="10" class="dropdown-item">
+        <input id='${index}effect3' type="range" min="-10" max="10" class="dropdown-item" class="effectSlider">
       </div>
     </div>`
       dropDownArray.push(
