@@ -30,11 +30,15 @@ var updatePath;
 var recordArray = [];
 var points = [];
 var arrayIndex;
-var looper1, looper2;
 var canDraw = true;
 var path = new pathStore();
-var looper1, looper2, looper3, looper4;
+var looper0,looper1, looper2, looper3, looper4;
 var fillCount = 0;
+var index0Slider1;
+var setSlider = false;
+var canDrawLooper0 = false;
+var intervalUpdate0 = 4;
+var zeroInterval;
 
 // ----------PRELOAD SOUNDS----------------------//
 
@@ -88,6 +92,10 @@ for(var i = 0; i <= 8; i++){
 
 
 
+
+
+
+
 // ----------STORE PATHS ----------------------//
 
 
@@ -100,6 +108,9 @@ function pathStore(x,y){
 this.update = function(x,y){
   var v = createVector(x,y);
   this.history.push(v);
+  if(this.history.length > 100){
+    this.history.splice(0,1);
+  }
 }
 
   this.showSine = function(){
@@ -169,24 +180,18 @@ function mousePressed(){
 // if the mouse press is on the canvas, 
 // and isn't clicking on a menu pop-up with a "user" class. 
 function mouseReleased(){
+
+
   if(clickTarget === "user"){
 
   }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null" && canDraw === true){
-  // pathArray.push(
-  //   {
-  //     drawing: path,
-  //     id: arrayIndex,
-  //     type: selector
-  // }
 
-  // );
   eval(selector).setVolume(0.0, 0.01);
   console.log(pathArray);
   console.log("end recording");
   stopRecording(arrayIndex);
   console.log("arrayIndex, mouseRelease:", arrayIndex);
   }
-  // canDraw === true;
 }
 
 
@@ -201,6 +206,8 @@ function setup(){
   textSize(25);
 
   populateRecordArray();
+
+
 }
 
 
@@ -209,6 +216,14 @@ function setup(){
 function draw(){
 
 
+  // $('.dropdown-item').click(function(){
+  //   // console.log('can see the slider value');
+  //   // console.log($('#0effect2').val());
+
+  //   for(var i = 0; i < dropDownArray.length; i++){
+
+  //   }
+  // });
 
   function windowResized() {
      w = innerWidth / 1.5;
@@ -216,6 +231,10 @@ function draw(){
      resizeCanvas(w,h);
   }
 
+  if(canDraw === true){
+    for(var i = 0; i < recordArray.length; i++){
+      recordArray[i].recording.rate(($(`#${i}effect1`).val()));
+    }
 
   if(mouseIsPressed){ 
     if(fillCount > 8){
@@ -251,7 +270,10 @@ function draw(){
           recordArray[i].drawing.showSquare();
           }
   }
+  }
 }
+
+
 
 
 

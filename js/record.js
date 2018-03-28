@@ -100,9 +100,10 @@ looper0 = new p5.SoundLoop(function(timeFromNow){
             fill(255 * (looper0.iterations % 2));
             vertex(pos.x,pos.y);
             endShape();
+            canDrawLooper0 = true;
         }
     } 
-}, 2);
+}, 4);
 
 looper1 = new p5.SoundLoop(function(timeFromNow){
     recordArray[1].recording.play(timeFromNow);
