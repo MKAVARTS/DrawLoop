@@ -8,29 +8,32 @@ var sketch, randomID, looper1, looper2, looper3, looper4;
 // tool selector by image id
 $(document).click(() => {
     if(event.target.className === "toolImage"){
-    console.log("a click on tool ", event.target.id);
+    // console.log("a click on tool ", event.target.id);
     selector = event.target.id;
-    console.log("selector: " , selector);
+    // console.log("selector: " , selector);
     }
   });
+
+
+
 
 
 // --------- TOOLBOX -------- //
 
 //delete draw path
 $(document).click(()=>{
-    console.log(event.target.id);
+    // console.log(event.target.id);
  if(event.target.className === 'delete'){
-     console.log('saw delete class');
-     console.log("ID of item to be deleted", event.target.id);
+    //  console.log('saw delete class');
+    //  console.log("ID of item to be deleted", event.target.id);
      var buttonID = parseFloat(event.target.id);
      for(var i = 0; i < dropDownArray.length; i++){
-         console.log("dropDowArrayID: " ,dropDownArray[i].id);
+        //  console.log("dropDowArrayID: " ,dropDownArray[i].id);
                  if(dropDownArray[i].id === buttonID){
-                     console.log('match!!');
-                     console.log("ID of deleted item", dropDownArray[i].id);
+                    //  console.log('match!!');
+                    //  console.log("ID of deleted item", dropDownArray[i].id);
                      dropDownArray.splice([i], 1);
-                     reprintModules();
+                     $(`#${buttonID.toString()}`).remove();
                      clear();
                      background(255);
                      break;
@@ -51,13 +54,13 @@ $(document).click(()=>{
                          canDraw = true;
                      }
 
-                     console.log("AT DELETE - fillCount : ", fillCount);
-                     console.log("AT DELETE - canDraw? : ", canDraw);
-                     console.log("AT DELETE - stop this looper: ", buttonID);
-                     console.log("AT DELETE - arrayIndex, delete module: ", buttonID);
-                     console.log("AT DELETE - pathArray", pathArray);
-                     console.log("AT DELETE - dropDownArray", dropDownArray);
-                     console.log("AT DELETE - recording array: ", recordArray);
+                    //  console.log("AT DELETE - fillCount : ", fillCount);
+                    //  console.log("AT DELETE - canDraw? : ", canDraw);
+                    //  console.log("AT DELETE - stop this looper: ", buttonID);
+                    //  console.log("AT DELETE - arrayIndex, delete module: ", buttonID);
+                    //  console.log("AT DELETE - pathArray", pathArray);
+                    //  console.log("AT DELETE - dropDownArray", dropDownArray);
+                    //  console.log("AT DELETE - recording array: ", recordArray);
 
                 }
              }
@@ -72,7 +75,7 @@ function reprintModules(){
         $('#modules').html('');
     }else{
     $('#modules').empty();
-    console.log('trying to re-print modules');
+    // console.log('trying to re-print modules');
     for(var i = 0; i < dropDownArray.length; i++){
         $('#modules').append(dropDownArray[i].module);
     }
@@ -85,16 +88,16 @@ function reprintModules(){
 function makeModule(type, index){
       console.log("makeModule arrayIndex", index);
     //   randomID = Math.random();
-      var dropDownModule = `<div class="dropdown"> 
+      var dropDownModule = `<div id='${index}' class="dropdown"> 
       <button style="height:40;width:75%" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <img class="toolImage" src='../Assets/vectors/${type}.png' height="15" width="40">
       <button id=${index} class="delete" type="button"> X </button>
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <label>Effect 1</label>
-        <input id='${index}effect1' type="range" value="1" min="-4" max="4" step= "1" class="dropdown-item" class="effectSlider">
+        <input id='${index}effect1' type="range" value="1.0"  min="-2.0" max="2.0" step= "0.25" class="dropdown-item" class="effectSlider">
         <label>Effect 2</label>
-        <input id='${index}effect2' type="range" min="0.1" max="4.0" step ="0.1" value="4.0" class="dropdown-item" class="effectSlider">
+        <input id='${index}effect2' value ="4.0" type="range" min="0.5" max="4.0" step ="0.5" class="dropdown-item" class="effectSlider">
         <label>Effect 3</label>
         <input id='${index}effect3' type="range" min="-10" max="10" class="dropdown-item" class="effectSlider">
       </div>
@@ -125,7 +128,7 @@ $(document).click(function(){
 
     addSketch(sketch)
     .then((sketchID) => {
-        console.log(sketchID);
+        // console.log(sketchID);
       });
     }
 })
@@ -143,8 +146,8 @@ $('#populateGallery').click(function(){
         selector = "null";
         populateGallery();
         getSketch().then((sketches) =>{
-            console.log(sketches);
-            console.log(Object.keys(sketches));
+            // console.log(sketches);
+            // console.log(Object.keys(sketches));
 
             Object.keys(sketches).forEach(function(item){
                 $('#pics').append(
@@ -162,14 +165,6 @@ $('#populateGallery').click(function(){
 // ------ NEW ----- //
 
 
-//clears HTML and dropdown menus 
-// $('#new').click(function(){
-//     clear();
-//     background(0);
-//     $('#modules').html('');
-//     dropDownArray = [];
-//   });
-
 //clears javascript arrays and handles audio 
     $('#deleteDrawing').click(function(){
         masterVolume(0.0, 0.1);
@@ -184,6 +179,10 @@ $('#populateGallery').click(function(){
         looper1.stop();
         looper2.stop();
         looper3.stop();
+        looper4.stop();
+        looper5.stop();
+        looper6.stop();
+        looper7.stop();
         populateRecordArray();
       });
 

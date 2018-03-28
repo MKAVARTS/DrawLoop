@@ -5,8 +5,8 @@
 
 //starting recording, takes selector and recording array index 
 function startRecording(input, index){
-    console.log("start recording at this index", index);
-    console.log("record array at startRecording: ", recordArray);
+    // console.log("start recording at this index", index);
+    // console.log("record array at startRecording: ", recordArray);
     recordArray[index].recorder.setInput(input);
     recordArray[index].recorder.record(recordArray[index].recording);
     recordArray[index].type = selector;
@@ -23,7 +23,7 @@ function checkRecording(){
             path = new pathStore();
             startRecording(eval(selector), i);
             arrayIndex = i;
-            console.log("check recording, arrayIndex", arrayIndex);
+            // console.log("check recording, arrayIndex", arrayIndex);
             makeModule(selector, arrayIndex);
             break;
         }
@@ -55,9 +55,9 @@ function checkRecording(){
               $('#looperCountWarning').modal("show");
           })
       }
-      console.log("fillCount :", fillCount);
-      console.log()
-      console.log('record array at STOP RECORDING: ', recordArray);
+    //   console.log("fillCount :", fillCount);
+    //   console.log()
+    //   console.log('record array at STOP RECORDING: ', recordArray);
         if(index === 0){
             looper0.start();
             }

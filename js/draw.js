@@ -82,7 +82,7 @@ for(var i = 0; i <= 8; i++){
           drawing: new pathStore()
       }
   );
-  console.log("recordArray", recordArray);  
+  // console.log("recordArray", recordArray);  
 }
 }
 
@@ -183,10 +183,10 @@ function mouseReleased(){
   }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null" && canDraw === true){
 
   eval(selector).setVolume(0.0, 0.01);
-  console.log(pathArray);
-  console.log("end recording");
+  // console.log(pathArray);
+  // console.log("end recording");
   stopRecording(arrayIndex);
-  console.log("arrayIndex, mouseRelease:", arrayIndex);
+  // console.log("arrayIndex, mouseRelease:", arrayIndex);
   }
 }
 
@@ -211,29 +211,30 @@ function setup(){
 
 function draw(){
 
+  // for(var i = 0; i <dropDownArray.length; i++){
+  //   recordArray[i].recording.rate(parseFloat($(`#${i}effect1`).val()));
+  //   eval("looper"+i).interval = parseFloat($(`#${i}effect2`).val());
+  //   }
 
-  $('.dropdown-item').mouseup(function(){
-    var amps = $('#0effect2').val();
-    console.log(amps);
-    setTimeout(updateSlider(parseFloat(amps)), 100);
-  });
+// function updateSlider(amount0,amount1){
+//   console.log("amount1 at updateSlider: " , amount1);
+//   looper0.interval = amount0;
+//   looper1.interval = amount1;
+// // recordArray[0].recording.setVolume(amount);
+// }
 
 
-function updateSlider(amount){
-  console.log(amount);
-  looper0.interval = amount;
-// recordArray[0].recording.setVolume(amount);
-}
+// $('.dropdown-item').change(function(){
+//   for(var i = 0; i < dropDownArray.length; i++){
+//     var updated = 
+//   }
+// });
 
   function windowResized() {
      w = innerWidth / 1.5;
      h = newW / 2;
      resizeCanvas(w,h);
   }
-
-    for(var i = 0; i < dropDownArray.length; i++){
-      recordArray[i].recording.rate(($(`#${i}effect1`).val()));
-    }
 
   if(mouseIsPressed){ 
     if(fillCount > 8){
