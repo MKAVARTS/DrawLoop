@@ -50,7 +50,7 @@ function preload(){
     triangle.playMode("restart");
     triangle.loop();
   });
-  sawtooth = loadSound('../Assets/sounds/african.wav', function(){
+  sawtooth = loadSound('../Assets/sounds/piano.wav', function(){
     // sawtooth.rate(2.0);
     sawtooth.setVolume(0.0);
     sawtooth.playMode("restart");
@@ -104,9 +104,9 @@ function pathStore(x,y){
 this.update = function(x,y){
   var v = createVector(x,y);
   this.history.push(v);
-  if(this.history.length > 100){
-    this.history.splice(0,1);
-  }
+  // if(this.history.length > 100){
+  //   this.history.splice(0,1);
+  // }
 }
 
   this.showSine = function(){
@@ -196,7 +196,7 @@ function mouseReleased(){
 
 
 function setup(){
-  cnv = createCanvas(w,h);
+  cnv = createCanvas(900,450);
   cnv.parent('soniDraw');
   background(255); 
   textSize(25);
@@ -211,10 +211,11 @@ function setup(){
 
 function draw(){
 
-  // for(var i = 0; i <dropDownArray.length; i++){
-  //   recordArray[i].recording.rate(parseFloat($(`#${i}effect1`).val()));
-  //   eval("looper"+i).interval = parseFloat($(`#${i}effect2`).val());
-  //   }
+  for(var i = 0; i <dropDownArray.length; i++){
+    recordArray[i].recording.rate(parseFloat($(`#${i}effect1`).val()));
+    eval("looper"+i).interval = parseFloat($(`#${i}effect2`).val());
+    recordArray[i].recording.setVolume(parseFloat($(`#${i}effect3`).val()));
+    }
 
 // function updateSlider(amount0,amount1){
 //   console.log("amount1 at updateSlider: " , amount1);
@@ -257,18 +258,18 @@ function draw(){
 }
 
   for(var i = 0; i < recordArray.length; i++){
-    if(recordArray[i].type === "sine" && recordArray[i].type != false){
-    recordArray[i].drawing.showSine();
-    }
-    if(recordArray[i].type === "triangle" && recordArray[i].type != false){
-      recordArray[i].drawing.showTriangle();
-      }
-      if(recordArray[i].type === "sawtooth" && recordArray[i].type != false){
-        recordArray[i].drawing.showSaw();
-        }
-        if(recordArray[i].type === "square" && recordArray[i].type != false){
-          recordArray[i].drawing.showSquare();
-          }
+    // if(recordArray[i].type === "sine" && recordArray[i].type != false){
+    // recordArray[i].drawing.showSine();
+    // }
+    // if(recordArray[i].type === "triangle" && recordArray[i].type != false){
+    //   recordArray[i].drawing.showTriangle();
+    //   }
+    //   if(recordArray[i].type === "sawtooth" && recordArray[i].type != false){
+    //     recordArray[i].drawing.showSaw();
+    //     }
+    //     if(recordArray[i].type === "square" && recordArray[i].type != false){
+    //       recordArray[i].drawing.showSquare();
+    //       }
     }
 }
 

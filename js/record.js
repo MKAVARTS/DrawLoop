@@ -93,14 +93,31 @@ function checkRecording(){
 
 looper0 = new p5.SoundLoop(function(timeFromNow){
     recordArray[0].recording.play(timeFromNow);
+    console.log(recordArray[0]);
     if(recordArray[0].filled === true){
         beginShape();
         for(var i = 0; i < recordArray[0].drawing.history.length; i++){
-            var pos = recordArray[0].drawing.history[i];
-            fill(255 * (looper0.iterations % 2));
-            vertex(pos.x,pos.y);
-            endShape();
-            canDrawLooper0 = true;
+            if(recordArray[0].type === "sine"){
+                var pos = recordArray[0].drawing.history[i];
+                fill(255 * (looper0.iterations % 2), 255 * (looper0.iterations % 2) , 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            }else if(recordArray[0].type === "triangle"){
+                var pos = recordArray[0].drawing.history[i];
+                fill(0, 0, 255 * (looper0.iterations % 2));
+                vertex(pos.x,pos.y);
+                endShape();
+            }else if(recordArray[0].type === "sawtooth"){
+                var pos = recordArray[0].drawing.history[i];
+                fill(0, 255 * (looper0.iterations % 2), 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            } else if(recordArray[0].type === "square"){
+                var pos = recordArray[0].drawing.history[i];
+                fill(255 * (looper0.iterations % 2), 0, 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            }
         }
     } 
 }, 4);
@@ -108,40 +125,91 @@ looper0 = new p5.SoundLoop(function(timeFromNow){
 looper1 = new p5.SoundLoop(function(timeFromNow){
     recordArray[1].recording.play(timeFromNow);
     if(recordArray[1].filled === true){
-    beginShape();       
-    for(var i = 0; i < recordArray[1].drawing.history.length; i++){
-            var pos = recordArray[1].drawing.history[i];
-            fill(255 * (looper1.iterations % 2));
-            vertex(pos.x,pos.y);
-            endShape();
+        beginShape();
+        for(var i = 0; i < recordArray[1].drawing.history.length; i++){
+            if(recordArray[1].type === "sine"){
+                var pos = recordArray[1].drawing.history[i];
+                fill(255 * (looper1.iterations % 2), 255 * (looper1.iterations % 2) , 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            }else if(recordArray[1].type === "triangle"){
+                var pos = recordArray[1].drawing.history[i];
+                fill(0, 0, 255 * (looper1.iterations % 2));
+                vertex(pos.x,pos.y);
+                endShape();
+            }else if(recordArray[1].type === "sawtooth"){
+                var pos = recordArray[1].drawing.history[i];
+                fill(0, 255 * (looper1.iterations % 2), 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            } else if(recordArray[1].type === "square"){
+                var pos = recordArray[1].drawing.history[i];
+                fill(255 * (looper1.iterations % 2), 0, 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            }
         }
-    }
+    } 
 }, 2);
 
 looper2 = new p5.SoundLoop(function(timeFromNow){
-    if(recordArray[2].filled === true){
     recordArray[2].recording.play(timeFromNow);
+    if(recordArray[2].filled === true){
         beginShape();
         for(var i = 0; i < recordArray[2].drawing.history.length; i++){
-            var pos = recordArray[2].drawing.history[i];
-            fill( 255 * (looper2.iterations % 2));
-            vertex(pos.x,pos.y);
-            endShape();
+            if(recordArray[2].type === "sine"){
+                var pos = recordArray[2].drawing.history[i];
+                fill(255 * (looper2.iterations % 2), 255 * (looper2.iterations % 2) , 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            }else if(recordArray[2].type === "triangle"){
+                var pos = recordArray[2].drawing.history[i];
+                fill(0, 0, 255 * (looper2.iterations % 2));
+                vertex(pos.x,pos.y);
+                endShape();
+            }else if(recordArray[2].type === "sawtooth"){
+                var pos = recordArray[2].drawing.history[i];
+                fill(0, 255 * (looper2.iterations % 2), 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            } else if(recordArray[2].type === "square"){
+                var pos = recordArray[2].drawing.history[i];
+                fill(255 * (looper2.iterations % 2), 0, 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            }
         }
-    }
+    } 
 }, 2);
 
 looper3 = new p5.SoundLoop(function(timeFromNow){
     recordArray[3].recording.play(timeFromNow);
-if(recordArray[3].filled === true){
-    beginShape();
-for(var i = 0; i < recordArray[3].drawing.history.length; i++){
-    var pos = recordArray[3].drawing.history[i];
-    fill(255 * (looper3.iterations % 2));
-    vertex(pos.x,pos.y);
-    endShape();
+    if(recordArray[3].filled === true){
+        beginShape();
+        for(var i = 0; i < recordArray[3].drawing.history.length; i++){
+            if(recordArray[3].type === "sine"){
+                var pos = recordArray[3].drawing.history[i];
+                fill(255 * (looper3.iterations % 2), 255 * (looper3.iterations % 2) , 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            }else if(recordArray[3].type === "triangle"){
+                var pos = recordArray[3].drawing.history[i];
+                fill(0, 0, 255 * (looper3.iterations % 2));
+                vertex(pos.x,pos.y);
+                endShape();
+            }else if(recordArray[3].type === "sawtooth"){
+                var pos = recordArray[3].drawing.history[i];
+                fill(0, 255 * (looper3.iterations % 2), 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            } else if(recordArray[3].type === "square"){
+                var pos = recordArray[3].drawing.history[i];
+                fill(255 * (looper3.iterations % 2), 0, 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            }
         }
-    }   
+    } 
 }, 2);
 
 
@@ -150,51 +218,119 @@ looper4 = new p5.SoundLoop(function(timeFromNow){
     if(recordArray[4].filled === true){
         beginShape();
         for(var i = 0; i < recordArray[4].drawing.history.length; i++){
-            var pos = recordArray[4].drawing.history[i];
-            fill(255 * (looper4.iterations % 2));
-            vertex(pos.x,pos.y);
-            endShape();
+            if(recordArray[4].type === "sine"){
+                var pos = recordArray[4].drawing.history[i];
+                fill(255 * (looper4.iterations % 2), 255 * (looper4.iterations % 2) , 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            }else if(recordArray[4].type === "triangle"){
+                var pos = recordArray[4].drawing.history[i];
+                fill(0, 0, 255 * (looper4.iterations % 2));
+                vertex(pos.x,pos.y);
+                endShape();
+            }else if(recordArray[4].type === "sawtooth"){
+                var pos = recordArray[4].drawing.history[i];
+                fill(0, 255 * (looper4.iterations % 2), 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            } else if(recordArray[4].type === "square"){
+                var pos = recordArray[4].drawing.history[i];
+                fill(255 * (looper4.iterations % 2), 0, 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            }
         }
-    }
+    } 
 }, 2);
 
 looper5 = new p5.SoundLoop(function(timeFromNow){
     recordArray[5].recording.play(timeFromNow);
     if(recordArray[5].filled === true){
-    beginShape();       
-    for(var i = 0; i < recordArray[5].drawing.history.length; i++){
-            var pos = recordArray[5].drawing.history[i];
-            fill(255 * (looper5.iterations % 2));
-            vertex(pos.x,pos.y);
-            endShape();
+        beginShape();
+        for(var i = 0; i < recordArray[5].drawing.history.length; i++){
+            if(recordArray[5].type === "sine"){
+                var pos = recordArray[5].drawing.history[i];
+                fill(255 * (looper5.iterations % 2), 255 * (looper5.iterations % 2) , 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            }else if(recordArray[5].type === "triangle"){
+                var pos = recordArray[5].drawing.history[i];
+                fill(0, 0, 255 * (looper5.iterations % 2));
+                vertex(pos.x,pos.y);
+                endShape();
+            }else if(recordArray[5].type === "sawtooth"){
+                var pos = recordArray[5].drawing.history[i];
+                fill(0, 255 * (looper5.iterations % 2), 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            } else if(recordArray[5].type === "square"){
+                var pos = recordArray[5].drawing.history[i];
+                fill(255 * (looper5.iterations % 2), 0, 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            }
         }
-    }
+    } 
 }, 2);
 
 looper6 = new p5.SoundLoop(function(timeFromNow){
-    if(recordArray[6].filled === true){
     recordArray[6].recording.play(timeFromNow);
+    if(recordArray[6].filled === true){
         beginShape();
         for(var i = 0; i < recordArray[6].drawing.history.length; i++){
-            var pos = recordArray[6].drawing.history[i];
-            fill( 255 * (looper6.iterations % 2));
-            vertex(pos.x,pos.y);
-            endShape();
+            if(recordArray[6].type === "sine"){
+                var pos = recordArray[6].drawing.history[i];
+                fill(255 * (looper6.iterations % 2), 255 * (looper6.iterations % 2) , 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            }else if(recordArray[6].type === "triangle"){
+                var pos = recordArray[6].drawing.history[i];
+                fill(0, 0, 255 * (looper6.iterations % 2));
+                vertex(pos.x,pos.y);
+                endShape();
+            }else if(recordArray[6].type === "sawtooth"){
+                var pos = recordArray[6].drawing.history[i];
+                fill(0, 255 * (looper6.iterations % 2), 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            } else if(recordArray[6].type === "square"){
+                var pos = recordArray[6].drawing.history[i];
+                fill(255 * (looper6.iterations % 2), 0, 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            }
         }
-    }
+    } 
 }, 2);
 
 looper7 = new p5.SoundLoop(function(timeFromNow){
     recordArray[7].recording.play(timeFromNow);
-if(recordArray[7].filled === true){
-    beginShape();
-for(var i = 0; i < recordArray[7].drawing.history.length; i++){
-    var pos = recordArray[7].drawing.history[i];
-    fill(255 * (looper7.iterations % 2));
-    vertex(pos.x,pos.y);
-    endShape();
+    if(recordArray[7].filled === true){
+        beginShape();
+        for(var i = 0; i < recordArray[7].drawing.history.length; i++){
+            if(recordArray[7].type === "sine"){
+                var pos = recordArray[7].drawing.history[i];
+                fill(255 * (looper7.iterations % 2), 255 * (looper7.iterations % 2) , 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            }else if(recordArray[7].type === "triangle"){
+                var pos = recordArray[7].drawing.history[i];
+                fill(0, 0, 255 * (looper7.iterations % 2));
+                vertex(pos.x,pos.y);
+                endShape();
+            }else if(recordArray[7].type === "sawtooth"){
+                var pos = recordArray[7].drawing.history[i];
+                fill(0, 255 * (looper7.iterations % 2), 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            } else if(recordArray[7].type === "square"){
+                var pos = recordArray[7].drawing.history[i];
+                fill(255 * (looper7.iterations % 2), 0, 0);
+                vertex(pos.x,pos.y);
+                endShape();
+            }
         }
-    }   
+    } 
 }, 2);
 
 
