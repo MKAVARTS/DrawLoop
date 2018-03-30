@@ -10,8 +10,8 @@ $(document).click(function(){
 // mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height
 let recordBufferArray = [];
 let dropDownArray = [];
-var w = innerWidth / 1.5;
-var h = w / 2;
+var w = 700;
+var h = 350;
 var sine, triangle, sawooth, square;
 let amplitude;
 var selector = "null";
@@ -34,7 +34,7 @@ var canDraw = true;
 var path = new pathStore();
 var looper0,looper1, looper2, looper3, looper4;
 var fillCount = 0;
-
+var updateSliders = true;
 
 // ----------PRELOAD SOUNDS----------------------//
 
@@ -160,6 +160,8 @@ this.update = function(x,y){
 
 
 function mousePressed(){
+
+
   if(clickTarget === "user"){
 
   }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null" && canDraw === true){
@@ -176,7 +178,6 @@ function mousePressed(){
 // if the mouse press is on the canvas, 
 // and isn't clicking on a menu pop-up with a "user" class. 
 function mouseReleased(){
-
 
   if(clickTarget === "user"){
 
@@ -196,7 +197,7 @@ function mouseReleased(){
 
 
 function setup(){
-  cnv = createCanvas(900,450);
+  cnv = createCanvas(w,h);
   cnv.parent('soniDraw');
   background(255); 
   textSize(25);
@@ -211,7 +212,7 @@ function setup(){
 
 function draw(){
 
-  for(var i = 0; i <dropDownArray.length; i++){
+  for(var i = 0; i <dropDownArray.length; i++ && updateSliders === true){
     recordArray[i].recording.rate(parseFloat($(`#${i}effect1`).val()));
     eval("looper"+i).interval = parseFloat($(`#${i}effect2`).val());
     recordArray[i].recording.setVolume(parseFloat($(`#${i}effect3`).val()));

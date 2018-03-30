@@ -49,6 +49,7 @@ function checkRecording(){
       selector = "null";
       canDraw = true;
       fillCount++;
+      $('.toolImage').removeClass('hoverState');
       if(fillCount >= 8){
           canDraw = false;
           setTimeout(function(){
@@ -87,13 +88,19 @@ function checkRecording(){
   }
 
 
+
+function recordForFirebase(source){
+    this.recorder = new p5.SoundRecorder();
+    this.recording = new p5.SoundFile();
+}
+
+
 // ----------LOOPERS FOR RECORD ARRAY----------------------//
 
 
 
 looper0 = new p5.SoundLoop(function(timeFromNow){
     recordArray[0].recording.play(timeFromNow);
-    console.log(recordArray[0]);
     if(recordArray[0].filled === true){
         beginShape();
         for(var i = 0; i < recordArray[0].drawing.history.length; i++){

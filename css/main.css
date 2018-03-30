@@ -221,3 +221,12 @@ h6{
   .modal-body{
       color: black;
   }
+
+/* -----------CLICK STATES------------- */
+
+.hoverState{
+    border: 2px outset white;
+    border-radius: 10px;
+    background: black;
+    color: white;
+}
