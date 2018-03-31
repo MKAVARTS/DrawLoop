@@ -89,12 +89,6 @@ function checkRecording(){
 
 
 
-function recordForFirebase(source){
-    this.recorder = new p5.SoundRecorder();
-    this.recording = new p5.SoundFile();
-}
-
-
 // ----------LOOPERS FOR RECORD ARRAY----------------------//
 
 

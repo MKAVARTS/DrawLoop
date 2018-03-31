@@ -247,6 +247,7 @@ function draw(){
 
   if(canDraw === true){
   setTimeout(updatePath, 200);
+
     function updatePath(){
     if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null"){
     path.update(mouseX,mouseY);

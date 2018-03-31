@@ -1,13 +1,12 @@
 var sketch, randomID, looper1, looper2, looper3, looper4, firebaseRecording;
-var song;
-
-
+var song,videoElement, stream, mediaRecorder, canvus, firebaseRecorder, firebaseVideo, videoPlayback;
+var storageRef, firebaseVideoRef;
 
 // --------- MOUSE HOVERS & SELECTORS  -------- //
 
 
 $(document).mouseover(function(){
-    if(event.target.className === "user"){
+    if(event.target.className === "user" && updateSliders === true){
         console.log('mousing over user class');
         $(`#${event.target.id}`).addClass('hoverState');
         $('.user').not(`#${event.target.id}`).removeClass('hoverState');
@@ -123,52 +122,144 @@ function makeModule(type, index){
 $(document).click(function(){
     if(event.target.id === "save"){
         $('#savingDrawing').modal('show');
-        firebaseRecording = new recordForFirebase();
-        firebaseRecording.recorder.record(firebaseRecording.recording);
-        setTimeout(stopFirebaseRecording, 1000);
+
+
+
+        initRecorderWithCanvas();
+        setTimeout(startFirebaseRecording, 1000);
+        
+
+    function initRecorderWithCanvas() {
+       var canvas = document.getElementById('defaultCanvas0');
+        var stream = canvas.captureStream(60); // build a 24 fps stream
+        recorder = new MediaRecorder(stream);
+        // listen to dataavailable, which gets triggered whenever we have
+        // an audio blob available
+        recorder.addEventListener('dataavailable', function (evt) {
+          updateVideo(evt.data);
+        });
+        // recorder.addEventListener('stop', function(evt){
+        //     sendToFirebase(recorder);
+        // })
+      }
+
+
+
+        setTimeout(stopFirebaseRecording, 20000);
+
+
+        function startFirebaseRecording() {
+          
+            recorder.start();
+          }
+
+
+
+          function stopFirebaseRecording() {
+            $('#savingDrawing').modal('hide');
+
+            // eventually this will trigger the dataavailable event
+            recorder.stop();
+
+          }
+
+
+          function updateVideo(blob) {
+
+            // use the blob from MediaRecorder as source for the video tag
+            firebaseVideo = new Blob([blob], {type: 'video/mp4'});
+            // videoPlayback = window.URL.createObjectURL(firebaseVideo);
+            sendToFirebase(firebaseVideo);
+            // video.play();
+          }
+          
+
     }
 });
 
 
 
 
-function stopFirebaseRecording(){
-    console.log('trying to stop recording for firebase');
-    firebaseRecording.recorder.stop();
-    sendToFirebase(firebaseRecording.recording);
-}
 
 // saves picture of canavs with .toDataURL and pushes sketch to firebase add function 
 function sendToFirebase(recording){
 
-    $('#savingDrawing').modal('hide');
-    canvas = document.getElementById('defaultCanvas0');
-    dataURL = canvas.toDataURL('image/jpeg', 0.5);
-    var audioBlob = new Blob(recording);
-    var audioURL = URL.createObjectURL(audioBlob);
+
+    console.log("send to firebase recording: ", recording);
 
 
-    console.log("recording at sendToFirebase", audioURL);
+    runStorage(recording);
+
+    function runStorage(file){
+
+    storageRef = firebase.storage().ref(`sketch/${Math.random()}.mp4`);
+    var task = storageRef.put(recording);
+    task.on('state_changed',
+
+    function error(err){
+        console.log('error from firebase storage PUT: ', err);
+        getUrl();
+    },
+
+    function complete(){
+        getUrl();
+    
+});
+}
+}
+
+
+    function getUrl(){
+    storageRef.getDownloadURL().then(function(url) {
+        // `url` is the download URL for 'images/stars.jpg'
+        
+        // This can be downloaded directly:
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+        xhr.onload = function(event) {
+            var blob = xhr.response;
+        };
+        xhr.open('GET', url);
+        xhr.send();
+        
+
     sketch = {
-        drawing: dataURL,
-        soundClip: audioURL
+        downloadURL: url
     }
 
     addSketch(sketch)
     .then((firebaseNodeInfo) => {
-        console.log(firebaseNodeInfo.drawing);
+        console.log(firebaseNodeInfo);
       });
+    
 
-}
+        }).catch(function(error) {
+            console.log("download from firebase error: ", error);
+        });
+    }
+    // canvas = document.getElementById('defaultCanvas0');
+    // dataURL = canvas.toDataURL('image/jpeg', 0.5);
+
+
+    // var firebaseEntry = URL.createObjectURL(recording);
+
 
 
 // ------ GALLERY ----- //
 
+// function updateVideo(blob) {
+//     firebaseVideo = document.getElementById('video');
+//     // use the blob from MediaRecorder as source for the video tag
+//     firebaseVideo.src = URL.createObjectURL(blob);
+//     firebaseVideo.controls = true;
+//     video.play();
+//   }
+  
+
 
 // clears HTML and javascript and populates from firebase 
 $('#populateGallery').click(function(){
-
-
+        updateSliders = false;
 
         masterVolume(0.0, 0.1);
         looper0.stop();
@@ -179,27 +270,28 @@ $('#populateGallery').click(function(){
         looper5.stop();
         looper6.stop();
         looper7.stop();
-        updateSliders = false;
         setTimeout(function(){
         // recordArray = [];
         // arrayIndex = 0;
         selector = "null";
+        masterVolume(1.0, 0.1);
         populateGallery();
+
+
         getSketch().then((sketches) =>{
-            // console.log(sketches);
-            // console.log(Object.keys(sketches));
+            console.log(sketches);
 
             Object.keys(sketches).forEach(function(item){
-                $('#pics').append(
-                `<div class="row">
-                    <div class="col">
-                         <img class="galleryPicture" width=500 height=300 src='${sketches[item].drawing}'/>
-                    </div>
-                </div>`);
-            })
+                var source = sketches[item].downloadURL;
+                $('#mainDiv')
+                .append(`<video class="col" controls="true" src='${source}'></video>`);
+        });
+
              });
+
         }, 200);
-})
+    });
+
 
 
 // ------ NEW ----- //
