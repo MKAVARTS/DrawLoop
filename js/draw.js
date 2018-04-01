@@ -34,7 +34,7 @@ var canDraw = true;
 var path = new pathStore();
 var looper0,looper1, looper2, looper3, looper4;
 var fillCount = 0;
-var updateSliders = true;
+var updateSliders = false;
 
 // ----------PRELOAD SOUNDS----------------------//
 
@@ -161,6 +161,7 @@ this.update = function(x,y){
 
 function mousePressed(){
 
+ 
 
   if(clickTarget === "user"){
 
@@ -178,6 +179,7 @@ function mousePressed(){
 // if the mouse press is on the canvas, 
 // and isn't clicking on a menu pop-up with a "user" class. 
 function mouseReleased(){
+
 
   if(clickTarget === "user"){
 
@@ -212,25 +214,15 @@ function setup(){
 
 function draw(){
 
-  for(var i = 0; i <dropDownArray.length; i++ && updateSliders === true){
+  for(var i = 0; i < 7; i++ && updateSliders === true){
+    if(recordArray[i].filled === true){
     recordArray[i].recording.rate(parseFloat($(`#${i}effect1`).val()));
     eval("looper"+i).interval = parseFloat($(`#${i}effect2`).val());
     recordArray[i].recording.setVolume(parseFloat($(`#${i}effect3`).val()));
+    }else {
+      //
     }
-
-// function updateSlider(amount0,amount1){
-//   console.log("amount1 at updateSlider: " , amount1);
-//   looper0.interval = amount0;
-//   looper1.interval = amount1;
-// // recordArray[0].recording.setVolume(amount);
-// }
-
-
-// $('.dropdown-item').change(function(){
-//   for(var i = 0; i < dropDownArray.length; i++){
-//     var updated = 
-//   }
-// });
+  }
 
   function windowResized() {
      w = innerWidth / 1.5;
@@ -259,20 +251,6 @@ function draw(){
   }
 }
 
-  for(var i = 0; i < recordArray.length; i++){
-    // if(recordArray[i].type === "sine" && recordArray[i].type != false){
-    // recordArray[i].drawing.showSine();
-    // }
-    // if(recordArray[i].type === "triangle" && recordArray[i].type != false){
-    //   recordArray[i].drawing.showTriangle();
-    //   }
-    //   if(recordArray[i].type === "sawtooth" && recordArray[i].type != false){
-    //     recordArray[i].drawing.showSaw();
-    //     }
-    //     if(recordArray[i].type === "square" && recordArray[i].type != false){
-    //       recordArray[i].drawing.showSquare();
-    //       }
-    }
 }
 
 

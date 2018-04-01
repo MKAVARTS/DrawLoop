@@ -1,6 +1,6 @@
 var sketch, randomID, looper1, looper2, looper3, looper4, firebaseRecording;
 var song,videoElement, stream, mediaRecorder, canvus, firebaseRecorder, firebaseVideo, videoPlayback;
-var storageRef, firebaseVideoRef;
+var storageRef, firebaseVideoRef, firebaseAudioRecorder, firebaseAudioRecording, videoURL, audioURL;
 
 // --------- MOUSE HOVERS & SELECTORS  -------- //
 
@@ -26,8 +26,8 @@ $(document).mouseover(function(){
 $(document).click(() => {
     if(event.target.className === "toolImage"){
     // console.log("a click on tool ", event.target.id);
-    console.log("on document click log selector :", selector);
     selector = event.target.id;
+    console.log("on document click log selector :", selector);
     $( `#${event.target.id}` ).addClass( 'hoverState');
     $('.toolImage').not(`#${event.target.id}`).removeClass('hoverState');
     // console.log("selector: " , selector);
@@ -98,11 +98,11 @@ function makeModule(type, index){
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <label>Rate</label>
-        <input id='${index}effect1' type="range" value="1.0"  min="-2.0" max="2.0" step= "0.25" class="dropdown-item" class="effectSlider">
+        <input id='${index}effect1' type="range" value="1.0"  min="-1.0" max="2.0" step= "0.25" class="dropdown-item" class="effectSlider">
         <label>Length</label>
-        <input id='${index}effect2' value ="4.0" type="range" min="0.5" max="4.0" step ="0.5" class="dropdown-item" class="effectSlider">
+        <input id='${index}effect2' value ="2.0" type="range" min="0.5" max="4.0" step ="0.5" class="dropdown-item" class="effectSlider">
         <label>Volume</label>
-        <input id='${index}effect3' type="range" value="1.0" step="0.1" min="0.0" max="0.5" class="dropdown-item" class="effectSlider">
+        <input id='${index}effect3' type="range" value="1.0" step="0.1" min="0.0" max="1.0" class="dropdown-item" class="effectSlider">
       </div>
     </div>`
       dropDownArray.push(
@@ -125,18 +125,23 @@ $(document).click(function(){
 
 
 
-        initRecorderWithCanvas();
         setTimeout(startFirebaseRecording, 1000);
-        
 
-    function initRecorderWithCanvas() {
+        firebaseAudioRecorder = new p5.SoundRecorder();
+        firebaseAudioRecording = new p5.SoundFile();
+
+        initRecorderWithCanvas(firebaseRecording);
+
+
+    function initRecorderWithCanvas(audio) {
        var canvas = document.getElementById('defaultCanvas0');
-        var stream = canvas.captureStream(60); // build a 24 fps stream
-        recorder = new MediaRecorder(stream);
+        var streamVideo = canvas.captureStream(60); // build a 24 fps stream
+        recorder = new MediaRecorder(streamVideo);
         // listen to dataavailable, which gets triggered whenever we have
         // an audio blob available
+
         recorder.addEventListener('dataavailable', function (evt) {
-          updateVideo(evt.data);
+          updateAudioVideo(evt.data, audio);
         });
         // recorder.addEventListener('stop', function(evt){
         //     sendToFirebase(recorder);
@@ -151,6 +156,7 @@ $(document).click(function(){
         function startFirebaseRecording() {
           
             recorder.start();
+            firebaseAudioRecorder.record(firebaseRecording);
           }
 
 
@@ -160,16 +166,18 @@ $(document).click(function(){
 
             // eventually this will trigger the dataavailable event
             recorder.stop();
+            firebaseAudioRecorder.stop();
 
           }
 
 
-          function updateVideo(blob) {
+          function updateAudioVideo(videoStream, audioStream) {
 
             // use the blob from MediaRecorder as source for the video tag
-            firebaseVideo = new Blob([blob], {type: 'video/mp4'});
+            firebaseVideo = new Blob([videoStream], {type: 'video/mp4'});
+            firebaseAudio = new Blob([audioStream], {type: 'audio/mpeg'});
             // videoPlayback = window.URL.createObjectURL(firebaseVideo);
-            sendToFirebase(firebaseVideo);
+            sendToFirebase(firebaseVideo, firebaseAudio);
             // video.play();
           }
           
@@ -182,35 +190,65 @@ $(document).click(function(){
 
 
 // saves picture of canavs with .toDataURL and pushes sketch to firebase add function 
-function sendToFirebase(recording){
+function sendToFirebase(video,audio){
 
 
-    console.log("send to firebase recording: ", recording);
+    console.log("send to firebase recording: ", video);
+    console.log("send to firebase recording: ", audio);
 
 
-    runStorage(recording);
+    runStorage(video,audio);
 
     function runStorage(file){
 
-    storageRef = firebase.storage().ref(`sketch/${Math.random()}.mp4`);
-    var task = storageRef.put(recording);
-    task.on('state_changed',
+    storageRefVideo = firebase.storage().ref(`sketch/${Math.random()}.mp4`);
+    storageRefAudio = firebase.storage().ref(`audio/${Math.random()}.mpeg`);
+    var videoTask = storageRefVideo.put(video);
+    var audioTask = storageRefAudio.put(audio);
+    videoTask.on('state_changed',
 
     function error(err){
         console.log('error from firebase storage PUT: ', err);
-        getUrl();
+        getVideoUrl();
     },
 
     function complete(){
-        getUrl();
+        getVideoUrl();
     
+});
+audioTask.on('state_changed',
+
+function error(err){
+    console.log('error from firebase storage PUT: ', err);
+    getAudioUrl();
+},
+
+function complete(){
+    getAudioUrl();
+
 });
 }
 }
 
 
-    function getUrl(){
-    storageRef.getDownloadURL().then(function(url) {
+    function getVideoUrl(){
+    storageRefVideo.getDownloadURL().then(function(url) {
+        // `url` is the download URL for 'images/stars.jpg'
+        
+        // This can be downloaded directly:
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+        xhr.onload = function(event) {
+            var blob = xhr.response;
+        };
+        xhr.open('GET', url);
+        xhr.send();
+        videoUrl = url;
+    });
+}
+
+function getAudioUrl(){
+    storageRefVideo.getDownloadURL().then(function(url) {
         // `url` is the download URL for 'images/stars.jpg'
         
         // This can be downloaded directly:
@@ -222,21 +260,36 @@ function sendToFirebase(recording){
         xhr.open('GET', url);
         xhr.send();
         
+        
+        audioUrl = url;
+        setTimeout(makeSketch, 250);
 
+    });
+}
+
+
+function makeSketch(){
     sketch = {
-        downloadURL: url
+        video: videoUrl,
+        audio: audioUrl
     }
 
     addSketch(sketch)
     .then((firebaseNodeInfo) => {
         console.log(firebaseNodeInfo);
       });
+}
+
+
     
 
-        }).catch(function(error) {
-            console.log("download from firebase error: ", error);
-        });
-    }
+    //     }).catch(function(error) {
+    //         console.log("download from firebase error: ", error);
+    //     });
+    // }
+
+
+
     // canvas = document.getElementById('defaultCanvas0');
     // dataURL = canvas.toDataURL('image/jpeg', 0.5);
 
@@ -282,15 +335,20 @@ $('#populateGallery').click(function(){
             console.log(sketches);
 
             Object.keys(sketches).forEach(function(item){
-                var source = sketches[item].downloadURL;
+                var videoSource = sketches[item].videoUrl;
+                var audioSource = sketches[item].audioUrl;
                 $('#mainDiv')
-                .append(`<video class="col" controls="true" src='${source}'></video>`);
+                .append(
+                    `<video class="col" controls="true" src='${videoSource}'></video>
+                    <audio class="col" controls="true" src='${audioSource}'></audio>`
+                
+                );
+            });
+
         });
 
-             });
-
-        }, 200);
-    });
+    }, 200);
+});
 
 
 
