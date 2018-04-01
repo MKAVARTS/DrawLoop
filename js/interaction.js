@@ -130,23 +130,23 @@ $(document).click(function(){
         firebaseAudioRecorder = new p5.SoundRecorder();
         firebaseAudioRecording = new p5.SoundFile();
 
-        initRecorderWithCanvas(firebaseRecording);
+        // initRecorderWithCanvas(firebaseRecording);
 
 
-    function initRecorderWithCanvas(audio) {
-       var canvas = document.getElementById('defaultCanvas0');
-        var streamVideo = canvas.captureStream(60); // build a 24 fps stream
-        recorder = new MediaRecorder(streamVideo);
-        // listen to dataavailable, which gets triggered whenever we have
-        // an audio blob available
+    // function initRecorderWithCanvas(audio) {
+    //    var canvas = document.getElementById('defaultCanvas0');
+    //     var streamVideo = canvas.captureStream(60); // build a 24 fps stream
+    //     recorder = new MediaRecorder(streamVideo);
+    //     // listen to dataavailable, which gets triggered whenever we have
+    //     // an audio blob available
 
-        recorder.addEventListener('dataavailable', function (evt) {
-          updateAudioVideo(evt.data, audio);
-        });
-        // recorder.addEventListener('stop', function(evt){
-        //     sendToFirebase(recorder);
-        // })
-      }
+    //     recorder.addEventListener('dataavailable', function (evt) {
+    //       updateAudioVideo(evt.data, audio);
+    //     });
+    //     // recorder.addEventListener('stop', function(evt){
+    //     //     sendToFirebase(recorder);
+    //     // })
+    //   }
 
 
 
@@ -155,8 +155,8 @@ $(document).click(function(){
 
         function startFirebaseRecording() {
           
-            recorder.start();
-            firebaseAudioRecorder.record(firebaseRecording);
+            // recorder.start();
+            firebaseAudioRecorder.record(firebaseAudioRecording);
           }
 
 
@@ -165,120 +165,132 @@ $(document).click(function(){
             $('#savingDrawing').modal('hide');
 
             // eventually this will trigger the dataavailable event
-            recorder.stop();
+            // recorder.stop();
             firebaseAudioRecorder.stop();
+            looper0.stop();
+            looper1.stop();
+            setTimeout(playBack, 200);
+
+
+            function playBack(){
+                firebaseAudioRecording.setVolume(0.0);
+                firebaseAudioRecording.play();
+                firebaseAudioRecording.setVolume(1.0, 1.0);
+            }
+            }
 
           }
+        });
 
 
-          function updateAudioVideo(videoStream, audioStream) {
+        //   function updateAudioVideo(videoStream, audioStream) {
 
-            // use the blob from MediaRecorder as source for the video tag
-            firebaseVideo = new Blob([videoStream], {type: 'video/mp4'});
-            firebaseAudio = new Blob([audioStream], {type: 'audio/mpeg'});
-            // videoPlayback = window.URL.createObjectURL(firebaseVideo);
-            sendToFirebase(firebaseVideo, firebaseAudio);
-            // video.play();
-          }
+        //     // use the blob from MediaRecorder as source for the video tag
+        //     firebaseVideo = new Blob([videoStream], {type: 'video/mp4'});
+        //     firebaseAudio = new Blob([audioStream], {type: 'audio/mpeg'});
+        //     // videoPlayback = window.URL.createObjectURL(firebaseVideo);
+        //     sendToFirebase(firebaseVideo, firebaseAudio);
+        //     // video.play();
+        //   }
           
 
-    }
-});
+//     }
+// });
 
 
 
 
 
 // saves picture of canavs with .toDataURL and pushes sketch to firebase add function 
-function sendToFirebase(video,audio){
+// function sendToFirebase(video,audio){
 
 
-    console.log("send to firebase recording: ", video);
-    console.log("send to firebase recording: ", audio);
+//     console.log("send to firebase recording: ", video);
+//     console.log("send to firebase recording: ", audio);
 
 
-    runStorage(video,audio);
+//     runStorage(video,audio);
 
-    function runStorage(file){
+//     function runStorage(file){
 
-    storageRefVideo = firebase.storage().ref(`sketch/${Math.random()}.mp4`);
-    storageRefAudio = firebase.storage().ref(`audio/${Math.random()}.mpeg`);
-    var videoTask = storageRefVideo.put(video);
-    var audioTask = storageRefAudio.put(audio);
-    videoTask.on('state_changed',
+//     storageRefVideo = firebase.storage().ref(`sketch/${Math.random()}.mp4`);
+//     storageRefAudio = firebase.storage().ref(`audio/${Math.random()}.mpeg`);
+//     var videoTask = storageRefVideo.put(video);
+//     var audioTask = storageRefAudio.put(audio);
+//     videoTask.on('state_changed',
 
-    function error(err){
-        console.log('error from firebase storage PUT: ', err);
-        getVideoUrl();
-    },
+//     function error(err){
+//         console.log('error from firebase storage PUT: ', err);
+//         getVideoUrl();
+//     },
 
-    function complete(){
-        getVideoUrl();
+//     function complete(){
+//         getVideoUrl();
     
-});
-audioTask.on('state_changed',
+// });
+// audioTask.on('state_changed',
 
-function error(err){
-    console.log('error from firebase storage PUT: ', err);
-    getAudioUrl();
-},
+// function error(err){
+//     console.log('error from firebase storage PUT: ', err);
+//     getAudioUrl();
+// },
 
-function complete(){
-    getAudioUrl();
+// function complete(){
+//     getAudioUrl();
 
-});
-}
-}
+// });
+// }
+// }
 
 
-    function getVideoUrl(){
-    storageRefVideo.getDownloadURL().then(function(url) {
-        // `url` is the download URL for 'images/stars.jpg'
+//     function getVideoUrl(){
+//     storageRefVideo.getDownloadURL().then(function(url) {
+//         // `url` is the download URL for 'images/stars.jpg'
         
-        // This can be downloaded directly:
-        var xhr = new XMLHttpRequest();
-        xhr.responseType = 'blob';
-        xhr.onload = function(event) {
-            var blob = xhr.response;
-        };
-        xhr.open('GET', url);
-        xhr.send();
-        videoUrl = url;
-    });
-}
+//         // This can be downloaded directly:
+//         var xhr = new XMLHttpRequest();
+//         xhr.responseType = 'blob';
+//         xhr.onload = function(event) {
+//             var blob = xhr.response;
+//         };
+//         xhr.open('GET', url);
+//         xhr.send();
+//         videoUrl = url;
+//     });
+// }
 
-function getAudioUrl(){
-    storageRefVideo.getDownloadURL().then(function(url) {
-        // `url` is the download URL for 'images/stars.jpg'
+// function getAudioUrl(){
+//     storageRefVideo.getDownloadURL().then(function(url) {
+//         // `url` is the download URL for 'images/stars.jpg'
         
-        // This can be downloaded directly:
-        var xhr = new XMLHttpRequest();
-        xhr.responseType = 'blob';
-        xhr.onload = function(event) {
-            var blob = xhr.response;
-        };
-        xhr.open('GET', url);
-        xhr.send();
+//         // This can be downloaded directly:
+//         var xhr = new XMLHttpRequest();
+//         xhr.responseType = 'blob';
+//         xhr.onload = function(event) {
+//             var blob = xhr.response;
+//         };
+//         xhr.open('GET', url);
+//         xhr.send();
         
         
-        audioUrl = url;
-        setTimeout(makeSketch, 250);
+//         audioUrl = url;
+//         setTimeout(makeSketch, 250);
 
-    });
-}
+//     });
+// }
 
 
-function makeSketch(){
-    sketch = {
-        video: videoUrl,
-        audio: audioUrl
-    }
+// function makeSketch(){
+//     sketch = {
+//         video: videoUrl,
+//         audio: audioUrl
+//     }
 
-    addSketch(sketch)
-    .then((firebaseNodeInfo) => {
-        console.log(firebaseNodeInfo);
-      });
-}
+//     addSketch(sketch)
+//     .then((firebaseNodeInfo) => {
+//         console.log(firebaseNodeInfo);
+//       });
+// }
 
 
     
@@ -311,44 +323,44 @@ function makeSketch(){
 
 
 // clears HTML and javascript and populates from firebase 
-$('#populateGallery').click(function(){
-        updateSliders = false;
+// $('#populateGallery').click(function(){
+//         updateSliders = false;
 
-        masterVolume(0.0, 0.1);
-        looper0.stop();
-        looper1.stop();
-        looper2.stop();
-        looper3.stop();
-        looper4.stop();
-        looper5.stop();
-        looper6.stop();
-        looper7.stop();
-        setTimeout(function(){
-        // recordArray = [];
-        // arrayIndex = 0;
-        selector = "null";
-        masterVolume(1.0, 0.1);
-        populateGallery();
+//         masterVolume(0.0, 0.1);
+//         looper0.stop();
+//         looper1.stop();
+//         looper2.stop();
+//         looper3.stop();
+//         looper4.stop();
+//         looper5.stop();
+//         looper6.stop();
+//         looper7.stop();
+//         setTimeout(function(){
+//         // recordArray = [];
+//         // arrayIndex = 0;
+//         selector = "null";
+//         masterVolume(1.0, 0.1);
+//         populateGallery();
 
 
-        getSketch().then((sketches) =>{
-            console.log(sketches);
+//         getSketch().then((sketches) =>{
+//             console.log(sketches);
 
-            Object.keys(sketches).forEach(function(item){
-                var videoSource = sketches[item].videoUrl;
-                var audioSource = sketches[item].audioUrl;
-                $('#mainDiv')
-                .append(
-                    `<video class="col" controls="true" src='${videoSource}'></video>
-                    <audio class="col" controls="true" src='${audioSource}'></audio>`
+//             Object.keys(sketches).forEach(function(item){
+//                 var videoSource = sketches[item].videoUrl;
+//                 var audioSource = sketches[item].audioUrl;
+//                 $('#mainDiv')
+//                 .append(
+//                     `<video class="col" controls="true" src='${videoSource}'></video>
+//                     <audio class="col" controls="true" src='${audioSource}'></audio>`
                 
-                );
-            });
+//                 );
+//             });
 
-        });
+//         });
 
-    }, 200);
-});
+//     }, 200);
+// });
 
 
 
@@ -356,23 +368,23 @@ $('#populateGallery').click(function(){
 
 
 //clears javascript arrays and handles audio 
-    $('#deleteDrawing').click(function(){
-        masterVolume(0.0, 0.1);
-        clear();
-        background(255);
-        $('#modules').html('');
-        dropDownArray = [];
-        pathArray = [];
-        recordArray = [];
-        arrayIndex = 0;
-        looper0.stop();
-        looper1.stop();
-        looper2.stop();
-        looper3.stop();
-        looper4.stop();
-        looper5.stop();
-        looper6.stop();
-        looper7.stop();
-        populateRecordArray();
-      });
+    // $('#deleteDrawing').click(function(){
+    //     masterVolume(0.0, 0.1);
+    //     clear();
+    //     background(255);
+    //     $('#modules').html('');
+    //     dropDownArray = [];
+    //     pathArray = [];
+    //     recordArray = [];
+    //     arrayIndex = 0;
+    //     looper0.stop();
+    //     looper1.stop();
+    //     looper2.stop();
+    //     looper3.stop();
+    //     looper4.stop();
+    //     looper5.stop();
+    //     looper6.stop();
+    //     looper7.stop();
+    //     populateRecordArray();
+    //   });
 
