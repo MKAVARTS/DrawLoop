@@ -35,12 +35,19 @@ var path = new pathStore();
 var looper0,looper1, looper2, looper3, looper4;
 var fillCount = 0;
 var updateSliders = false;
+var level, amps;
+
+
+
+
+
+
 
 // ----------PRELOAD SOUNDS----------------------//
 
 function preload(){
   masterVolume(0.0);
-  sine = loadSound('../Assets/sounds/synthy.wav', function(){
+  sine = loadSound('../Assets/sounds/goldenDrums.wav', function(){
     sine.setVolume(0.0);
     sine.playMode("restart");
     sine.loop();
@@ -50,13 +57,13 @@ function preload(){
     triangle.playMode("restart");
     triangle.loop();
   });
-  sawtooth = loadSound('../Assets/sounds/piano.wav', function(){
+  sawtooth = loadSound('../Assets/sounds/guitar.wav', function(){
     // sawtooth.rate(2.0);
     sawtooth.setVolume(0.0);
     sawtooth.playMode("restart");
     sawtooth.loop();
   });
-  square = loadSound('../Assets/sounds/thumb.wav', function(){
+  square = loadSound('../Assets/sounds/popMarimbaD.wav', function(){
     square.rate(0.5);
     square.setVolume(0.0);
     square.playMode("restart");
@@ -203,8 +210,8 @@ function setup(){
   cnv.parent('soniDraw');
   background(255); 
   textSize(25);
-
   populateRecordArray();
+
 
 
 }
@@ -214,6 +221,7 @@ function setup(){
 
 function draw(){
 
+
   for(var i = 0; i < 7; i++ && updateSliders === true){
     if(recordArray[i].filled === true){
     recordArray[i].recording.rate(parseFloat($(`#${i}effect1`).val()));
@@ -222,12 +230,6 @@ function draw(){
     }else {
       //
     }
-  }
-
-  function windowResized() {
-     w = innerWidth / 1.5;
-     h = newW / 2;
-     resizeCanvas(w,h);
   }
 
   if(mouseIsPressed){ 
@@ -243,15 +245,16 @@ function draw(){
     function updatePath(){
     if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null"){
     path.update(mouseX,mouseY);
-    strokeWeight(1);
-    stroke(0);
-    line(mouseX,mouseY, pmouseX, pmouseY);
+
+      strokeWeight(1);
+      stroke(0);
+      ellipse(mouseX,mouseY, 20, 20);
+    }
       }
     }
   }
 }
 
-}
 
 
 

@@ -79,15 +79,11 @@ h6{
 
 
 /* -----------CANVAS------------- */
-    /* #mainDiv{
-        background-color: blue;
-        margin : 50px;
-    }
 
 
-    #soniDraw {
-        margin-left: 20px; 
-    } */
+#defaultCanvas0{
+    margin-left: 100px;
+}
 
 
 /* -----------TOOLBOX------------- */
@@ -141,7 +137,7 @@ h6{
 
 .user{
     border-radius: 20px;
-    width: 60px;
+    width: 30%;
     height: 60px;
     border: 2px solid black;
     margin-bottom: 5px;
@@ -197,6 +193,7 @@ h6{
 .galleryPicture{
     margin: 15px;
 }
+
 
 
 

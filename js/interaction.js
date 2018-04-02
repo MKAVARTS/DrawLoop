@@ -1,6 +1,13 @@
 var sketch, randomID, looper1, looper2, looper3, looper4, firebaseRecording;
 var song,videoElement, stream, mediaRecorder, canvus, firebaseRecorder, firebaseVideo, videoPlayback;
-var storageRef, firebaseVideoRef, firebaseAudioRecorder, firebaseAudioRecording, videoURL, audioURL;
+var storageRef, firebaseVideoRef, firebaseAudioRecorder, firebaseAudioRecording, videoURL, audioURL, recorder;
+
+
+
+
+
+
+
 
 // --------- MOUSE HOVERS & SELECTORS  -------- //
 
@@ -98,9 +105,9 @@ function makeModule(type, index){
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <label>Rate</label>
-        <input id='${index}effect1' type="range" value="1.0"  min="-1.0" max="2.0" step= "0.25" class="dropdown-item" class="effectSlider">
+        <input id='${index}effect1' type="range" value="1.0"  min="-2.0" max="2.0" step= "0.5" class="dropdown-item" class="effectSlider">
         <label>Length</label>
-        <input id='${index}effect2' value ="2.0" type="range" min="0.5" max="4.0" step ="0.5" class="dropdown-item" class="effectSlider">
+        <input id='${index}effect2' value ="4.0" type="range" min="0.5" max="4.0" step ="0.5" class="dropdown-item" class="effectSlider">
         <label>Volume</label>
         <input id='${index}effect3' type="range" value="1.0" step="0.1" min="0.0" max="1.0" class="dropdown-item" class="effectSlider">
       </div>
@@ -123,190 +130,48 @@ $(document).click(function(){
     if(event.target.id === "save"){
         $('#savingDrawing').modal('show');
 
+        var id = Math.random();
 
+        var recordForDownload = new p5.SoundRecorder();
+        var recordingforDownload = new p5.SoundFile();
 
-        setTimeout(startFirebaseRecording, 1000);
+        recordForDownload.record(recordingforDownload);
 
-        firebaseAudioRecorder = new p5.SoundRecorder();
-        firebaseAudioRecording = new p5.SoundFile();
-
-        // initRecorderWithCanvas(firebaseRecording);
-
-
-    // function initRecorderWithCanvas(audio) {
-    //    var canvas = document.getElementById('defaultCanvas0');
-    //     var streamVideo = canvas.captureStream(60); // build a 24 fps stream
-    //     recorder = new MediaRecorder(streamVideo);
-    //     // listen to dataavailable, which gets triggered whenever we have
-    //     // an audio blob available
-
-    //     recorder.addEventListener('dataavailable', function (evt) {
-    //       updateAudioVideo(evt.data, audio);
-    //     });
-    //     // recorder.addEventListener('stop', function(evt){
-    //     //     sendToFirebase(recorder);
-    //     // })
-    //   }
-
-
-
-        setTimeout(stopFirebaseRecording, 20000);
-
-
-        function startFirebaseRecording() {
-          
-            // recorder.start();
-            firebaseAudioRecorder.record(firebaseAudioRecording);
-          }
-
-
-
-          function stopFirebaseRecording() {
+        setTimeout(stopDownloadRecording, 10000);
+        
+        
+        
+        function stopDownloadRecording(){
             $('#savingDrawing').modal('hide');
+            recordForDownload.stop();
 
-            // eventually this will trigger the dataavailable event
-            // recorder.stop();
-            firebaseAudioRecorder.stop();
-            looper0.stop();
-            looper1.stop();
-            setTimeout(playBack, 200);
+            setTimeout(downloadRecording, 250);
+        }
 
+        function downloadRecording(){
+            setTimeout(timeToSaveSound, 100);
+        }
+            
+                function timeToSaveSound(){
+                saveSound(recordingforDownload, `${id}.wav`);
+        }
 
-            function playBack(){
-                firebaseAudioRecording.setVolume(0.0);
-                firebaseAudioRecording.play();
-                firebaseAudioRecording.setVolume(1.0, 1.0);
-            }
-            }
-
-          }
-        });
+        function timeToDownloadCanvas(){
+            saveCanvas(cnv, `${id}`, 'jpg');
+        }
 
 
-        //   function updateAudioVideo(videoStream, audioStream) {
+    }
 
-        //     // use the blob from MediaRecorder as source for the video tag
-        //     firebaseVideo = new Blob([videoStream], {type: 'video/mp4'});
-        //     firebaseAudio = new Blob([audioStream], {type: 'audio/mpeg'});
-        //     // videoPlayback = window.URL.createObjectURL(firebaseVideo);
-        //     sendToFirebase(firebaseVideo, firebaseAudio);
-        //     // video.play();
-        //   }
-          
-
-//     }
-// });
+});
 
 
 
 
 
 // saves picture of canavs with .toDataURL and pushes sketch to firebase add function 
-// function sendToFirebase(video,audio){
 
 
-//     console.log("send to firebase recording: ", video);
-//     console.log("send to firebase recording: ", audio);
-
-
-//     runStorage(video,audio);
-
-//     function runStorage(file){
-
-//     storageRefVideo = firebase.storage().ref(`sketch/${Math.random()}.mp4`);
-//     storageRefAudio = firebase.storage().ref(`audio/${Math.random()}.mpeg`);
-//     var videoTask = storageRefVideo.put(video);
-//     var audioTask = storageRefAudio.put(audio);
-//     videoTask.on('state_changed',
-
-//     function error(err){
-//         console.log('error from firebase storage PUT: ', err);
-//         getVideoUrl();
-//     },
-
-//     function complete(){
-//         getVideoUrl();
-    
-// });
-// audioTask.on('state_changed',
-
-// function error(err){
-//     console.log('error from firebase storage PUT: ', err);
-//     getAudioUrl();
-// },
-
-// function complete(){
-//     getAudioUrl();
-
-// });
-// }
-// }
-
-
-//     function getVideoUrl(){
-//     storageRefVideo.getDownloadURL().then(function(url) {
-//         // `url` is the download URL for 'images/stars.jpg'
-        
-//         // This can be downloaded directly:
-//         var xhr = new XMLHttpRequest();
-//         xhr.responseType = 'blob';
-//         xhr.onload = function(event) {
-//             var blob = xhr.response;
-//         };
-//         xhr.open('GET', url);
-//         xhr.send();
-//         videoUrl = url;
-//     });
-// }
-
-// function getAudioUrl(){
-//     storageRefVideo.getDownloadURL().then(function(url) {
-//         // `url` is the download URL for 'images/stars.jpg'
-        
-//         // This can be downloaded directly:
-//         var xhr = new XMLHttpRequest();
-//         xhr.responseType = 'blob';
-//         xhr.onload = function(event) {
-//             var blob = xhr.response;
-//         };
-//         xhr.open('GET', url);
-//         xhr.send();
-        
-        
-//         audioUrl = url;
-//         setTimeout(makeSketch, 250);
-
-//     });
-// }
-
-
-// function makeSketch(){
-//     sketch = {
-//         video: videoUrl,
-//         audio: audioUrl
-//     }
-
-//     addSketch(sketch)
-//     .then((firebaseNodeInfo) => {
-//         console.log(firebaseNodeInfo);
-//       });
-// }
-
-
-    
-
-    //     }).catch(function(error) {
-    //         console.log("download from firebase error: ", error);
-    //     });
-    // }
-
-
-
-    // canvas = document.getElementById('defaultCanvas0');
-    // dataURL = canvas.toDataURL('image/jpeg', 0.5);
-
-
-    // var firebaseEntry = URL.createObjectURL(recording);
 
 
 
@@ -323,68 +188,70 @@ $(document).click(function(){
 
 
 // clears HTML and javascript and populates from firebase 
-// $('#populateGallery').click(function(){
-//         updateSliders = false;
+$('#populateGallery').click(function(){
+        updateSliders = false;
 
-//         masterVolume(0.0, 0.1);
-//         looper0.stop();
-//         looper1.stop();
-//         looper2.stop();
-//         looper3.stop();
-//         looper4.stop();
-//         looper5.stop();
-//         looper6.stop();
-//         looper7.stop();
-//         setTimeout(function(){
-//         // recordArray = [];
-//         // arrayIndex = 0;
-//         selector = "null";
-//         masterVolume(1.0, 0.1);
-//         populateGallery();
+        masterVolume(0.0, 0.01);
+        looper0.stop();
+        looper1.stop();
+        looper2.stop();
+        looper3.stop();
+        looper4.stop();
+        looper5.stop();
+        looper6.stop();
+        looper7.stop();
+        setTimeout(function(){
+        // recordArray = [];
+        // arrayIndex = 0;
+        selector = "null";
+        masterVolume(1.0, 0.1);
+        populateGallery();
 
 
-//         getSketch().then((sketches) =>{
-//             console.log(sketches);
+        getSketch().then((sketches) =>{
+            console.log(sketches);
 
-//             Object.keys(sketches).forEach(function(item){
-//                 var videoSource = sketches[item].videoUrl;
-//                 var audioSource = sketches[item].audioUrl;
-//                 $('#mainDiv')
-//                 .append(
-//                     `<video class="col" controls="true" src='${videoSource}'></video>
-//                     <audio class="col" controls="true" src='${audioSource}'></audio>`
+            Object.keys(sketches).forEach(function(item){
+                // var videoSource = sketches[item].videoUrl;
+                var videoSource = sketches[item].downloadURL;
+                $('#mainDiv')
+                .append(
+                    // `<video class="col" controls="true" src='${videoSource}'></video>
+
+                    `<div class='galleryVideo'><video controls="true" width="500" height="" class="col"  src='${videoSource}'></video></div>`
                 
-//                 );
-//             });
+                );
+            });
 
-//         });
+        });
 
-//     }, 200);
-// });
+    }, 200);
+    
+});
 
 
 
 // ------ NEW ----- //
 
 
-//clears javascript arrays and handles audio 
-    // $('#deleteDrawing').click(function(){
-    //     masterVolume(0.0, 0.1);
-    //     clear();
-    //     background(255);
-    //     $('#modules').html('');
-    //     dropDownArray = [];
-    //     pathArray = [];
-    //     recordArray = [];
-    //     arrayIndex = 0;
-    //     looper0.stop();
-    //     looper1.stop();
-    //     looper2.stop();
-    //     looper3.stop();
-    //     looper4.stop();
-    //     looper5.stop();
-    //     looper6.stop();
-    //     looper7.stop();
-    //     populateRecordArray();
-    //   });
+// clears javascript arrays and handles audio 
+    $('#deleteDrawing').click(function(){
+        masterVolume(0.0, 0.1);
+        clear();
+        background(255);
+        $('#modules').html('');
+        dropDownArray = [];
+        pathArray = [];
+        recordArray = [];
+        arrayIndex = 0;
+        looper0.stop();
+        looper1.stop();
+        looper2.stop();
+        looper3.stop();
+        looper4.stop();
+        looper5.stop();
+        looper6.stop();
+        looper7.stop();
+        populateRecordArray();
+      });
 

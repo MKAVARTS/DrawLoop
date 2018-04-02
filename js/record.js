@@ -63,16 +63,16 @@ function checkRecording(){
             looper0.start();
             }
             else if(index === 1){
-            looper1.start();
+            looper1.syncedStart(looper0);
             }
             else if(index === 2){
-            looper2.start();
+            looper2.syncedStart(looper1);
             }
             else if(index === 3){
-            looper3.start();
+            looper3.syncedStart(looper2);
             } 
             else if(index === 4){
-              looper4.start();
+              looper4.syncedStart(looper3);
             }    
             else if(index === 5){
             looper5.start();

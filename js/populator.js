@@ -23,10 +23,8 @@ function populateDraw(){
             </div>
         </div>
         <div id="toolsHeader" class="col">
-        <button type="button" id="information" class="user" data-toggle="modal" data-target="#info"> ? </button>
-            <button class="user" id="save"> S </button>
-            <button class="user" id="galleryButton"  class="user" data-toggle="modal" data-target="#galleryWarning"> G </button>
-            <button class="user" id="new"  class="user" data-toggle="modal" data-target="#newDrawing"> N </button>
+        <button type="button" id="information" class="user" data-toggle="modal" data-target="#info"> Instructions </button>
+            <button class="user" id="save"> Save </button>
             <h5>Tools</h5>
         </div>
     </div>
