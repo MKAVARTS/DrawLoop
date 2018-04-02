@@ -105,9 +105,9 @@ function makeModule(type, index){
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <label>Rate</label>
-        <input id='${index}effect1' type="range" value="1.0"  min="-2.0" max="2.0" step= "0.5" class="dropdown-item" class="effectSlider">
+        <input id='${index}effect1' type="range" value="1.0"  min="-2.0" max="2.0" step= "0.25" class="dropdown-item" class="effectSlider">
         <label>Length</label>
-        <input id='${index}effect2' value ="4.0" type="range" min="0.5" max="4.0" step ="0.5" class="dropdown-item" class="effectSlider">
+        <input id='${index}effect2' value ="2.0" type="range" min="0.5" max="4.0" step ="0.5" class="dropdown-item" class="effectSlider">
         <label>Volume</label>
         <input id='${index}effect3' type="range" value="1.0" step="0.1" min="0.0" max="1.0" class="dropdown-item" class="effectSlider">
       </div>
@@ -128,42 +128,91 @@ function makeModule(type, index){
 
 $(document).click(function(){
     if(event.target.id === "save"){
-        $('#savingDrawing').modal('show');
 
+        $('#savingDrawing').modal('show');
         var id = Math.random();
 
         var recordForDownload = new p5.SoundRecorder();
         var recordingforDownload = new p5.SoundFile();
 
-        recordForDownload.record(recordingforDownload);
 
-        setTimeout(stopDownloadRecording, 10000);
-        
-        
-        
-        function stopDownloadRecording(){
-            $('#savingDrawing').modal('hide');
-            recordForDownload.stop();
+        findRecordTime();
 
-            setTimeout(downloadRecording, 250);
+        function findRecordTime(){
+            for(var i = 0; i < recordArray.length; i++){
+                if(recordArray[i].filled === true){
+                    recordArray[i].recording.onended(startDownloadRecording);
+                    break;
+                }
+            }
         }
 
-        function downloadRecording(){
-            setTimeout(timeToSaveSound, 100);
+        function endRecordTime(){
+        for(var i = 0; i < recordArray.length; i++){
+            if(recordArray[i].filled === true){
+                recordArray[i].recording.onended(stopDownloadRecording);
+                break;
+            }
         }
-            
-                function timeToSaveSound(){
-                saveSound(recordingforDownload, `${id}.wav`);
-        }
-
-        function timeToDownloadCanvas(){
-            saveCanvas(cnv, `${id}`, 'jpg');
-        }
-
-
     }
 
-});
+
+
+
+            function startDownloadRecording(){
+                console.log('trying to startDownloadRecording');
+                recordForDownload.record(recordingforDownload);
+                setTimeout(endRecordTime, 15000);
+
+                for(var i = 0; i < recordArray.length; i++){
+                    if(recordArray[i].filled === true){
+                        recordArray[i].recording.onended(makeNull);
+                        break;
+                    }
+                }
+
+            }
+
+
+            function makeNull(){
+
+            }
+
+
+
+                function stopDownloadRecording(){
+                    console.log("trying to stop recording");
+                    $('#savingDrawing').modal('hide');
+                    recordForDownload.stop();
+                    for(var i = 0; i < recordArray.length; i++){
+                        if(recordArray[i].filled === true){
+                            recordArray[i].recording.onended(makeNull);
+                            break;
+                        }
+                    }
+                    setTimeout(downloadRecording, 250);
+                    }
+        
+    
+                function downloadRecording(){
+                    setTimeout(timeToSaveSound, 100);
+                }
+                    
+                        function timeToSaveSound(){
+                        save(recordingforDownload, `${id}.mp3`);
+                        setTimeout(timeToDownloadCanvas, 200);
+                }
+        
+                function timeToDownloadCanvas(){
+                    
+                    saveCanvas(cnv, `${id}`, 'jpg');
+                }
+            }
+        });
+
+
+
+
 
 
 

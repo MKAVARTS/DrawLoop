@@ -60,28 +60,48 @@ function checkRecording(){
     //   console.log()
     //   console.log('record array at STOP RECORDING: ', recordArray);
         if(index === 0){
-            looper0.start();
+            looper0.syncedStart(findSync());
             }
             else if(index === 1){
-            looper1.syncedStart(looper0);
+            looper1.syncedStart(findSync());
             }
             else if(index === 2){
-            looper2.syncedStart(looper1);
+            looper2.syncedStart(findSync());
             }
             else if(index === 3){
-            looper3.syncedStart(looper2);
+            looper3.syncedStart(findSync());
             } 
             else if(index === 4){
-              looper4.syncedStart(looper3);
+              looper4.syncedStart(findSync());
             }    
             else if(index === 5){
-            looper5.start();
+            looper5.syncedStart(findSync());
             }    
             else if(index === 6){
-            looper6.start();
+            looper6.syncedStart(findSync());
             }
             else if(index === 7){
-            looper7.start();
+            looper7.syncedStart(findSync());
+            }
+
+            function findSync(){
+                if(recordArray[0].filled === true){
+                    return looper0;
+                }else if(recordArray[1].filled === true){
+                    return looper1;
+                }else if(recordArray[2].filled === true){
+                    return looper2;
+                }else if(recordArray[3].filled === true){
+                    return looper3;
+                }else if(recordArray[4].filled === true){
+                    return looper4;
+                }else if(recordArray[5].filled === true){
+                    return looper5;
+                }else if(recordArray[6].filled === true){
+                    return looper6;
+                }else if(recordArray[7].filled === true){
+                    return looper7;
+                }
             }
             
   }, 400);
@@ -100,24 +120,36 @@ looper0 = new p5.SoundLoop(function(timeFromNow){
         for(var i = 0; i < recordArray[0].drawing.history.length; i++){
             if(recordArray[0].type === "sine"){
                 var pos = recordArray[0].drawing.history[i];
-                fill(255 * (looper0.iterations % 2), 255 * (looper0.iterations % 2) , 0);
+                fill(255, 255, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper0.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             }else if(recordArray[0].type === "triangle"){
                 var pos = recordArray[0].drawing.history[i];
-                fill(0, 0, 255 * (looper0.iterations % 2));
+                fill(0, 0, 255);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper0.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             }else if(recordArray[0].type === "sawtooth"){
                 var pos = recordArray[0].drawing.history[i];
-                fill(0, 255 * (looper0.iterations % 2), 0);
+                fill(0, 255, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper0.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             } else if(recordArray[0].type === "square"){
                 var pos = recordArray[0].drawing.history[i];
-                fill(255 * (looper0.iterations % 2), 0, 0);
+                fill(255, 0, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper0.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             }
         }
     } 
@@ -129,25 +161,37 @@ looper1 = new p5.SoundLoop(function(timeFromNow){
         beginShape();
         for(var i = 0; i < recordArray[1].drawing.history.length; i++){
             if(recordArray[1].type === "sine"){
-                var pos = recordArray[1].drawing.history[i];
-                fill(255 * (looper1.iterations % 2), 255 * (looper1.iterations % 2) , 0);
+                var pos = recordArray[0].drawing.history[i];
+                fill(255, 255, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper1.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             }else if(recordArray[1].type === "triangle"){
                 var pos = recordArray[1].drawing.history[i];
-                fill(0, 0, 255 * (looper1.iterations % 2));
+                fill(0, 0, 255);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper1.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             }else if(recordArray[1].type === "sawtooth"){
                 var pos = recordArray[1].drawing.history[i];
-                fill(0, 255 * (looper1.iterations % 2), 0);
+                fill(0, 255, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper1.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             } else if(recordArray[1].type === "square"){
                 var pos = recordArray[1].drawing.history[i];
-                fill(255 * (looper1.iterations % 2), 0, 0);
+                fill(255, 0, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper1.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             }
         }
     } 
@@ -160,24 +204,36 @@ looper2 = new p5.SoundLoop(function(timeFromNow){
         for(var i = 0; i < recordArray[2].drawing.history.length; i++){
             if(recordArray[2].type === "sine"){
                 var pos = recordArray[2].drawing.history[i];
-                fill(255 * (looper2.iterations % 2), 255 * (looper2.iterations % 2) , 0);
+                fill(255, 255, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper2.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             }else if(recordArray[2].type === "triangle"){
                 var pos = recordArray[2].drawing.history[i];
-                fill(0, 0, 255 * (looper2.iterations % 2));
+                fill(0, 0, 255);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper2.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             }else if(recordArray[2].type === "sawtooth"){
                 var pos = recordArray[2].drawing.history[i];
-                fill(0, 255 * (looper2.iterations % 2), 0);
+                fill(0, 255, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper2.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             } else if(recordArray[2].type === "square"){
                 var pos = recordArray[2].drawing.history[i];
-                fill(255 * (looper2.iterations % 2), 0, 0);
+                fill(255, 0, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper2.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             }
         }
     } 
@@ -190,24 +246,36 @@ looper3 = new p5.SoundLoop(function(timeFromNow){
         for(var i = 0; i < recordArray[3].drawing.history.length; i++){
             if(recordArray[3].type === "sine"){
                 var pos = recordArray[3].drawing.history[i];
-                fill(255 * (looper3.iterations % 2), 255 * (looper3.iterations % 2) , 0);
+                fill(255, 255, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper3.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             }else if(recordArray[3].type === "triangle"){
                 var pos = recordArray[3].drawing.history[i];
-                fill(0, 0, 255 * (looper3.iterations % 2));
+                fill(0, 0, 255);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper3.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             }else if(recordArray[3].type === "sawtooth"){
                 var pos = recordArray[3].drawing.history[i];
-                fill(0, 255 * (looper3.iterations % 2), 0);
+                fill(0, 255, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper3.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             } else if(recordArray[3].type === "square"){
                 var pos = recordArray[3].drawing.history[i];
-                fill(255 * (looper3.iterations % 2), 0, 0);
+                fill(255, 0, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper3.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             }
         }
     } 
@@ -221,24 +289,36 @@ looper4 = new p5.SoundLoop(function(timeFromNow){
         for(var i = 0; i < recordArray[4].drawing.history.length; i++){
             if(recordArray[4].type === "sine"){
                 var pos = recordArray[4].drawing.history[i];
-                fill(255 * (looper4.iterations % 2), 255 * (looper4.iterations % 2) , 0);
+                fill(255, 255, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper4.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             }else if(recordArray[4].type === "triangle"){
                 var pos = recordArray[4].drawing.history[i];
-                fill(0, 0, 255 * (looper4.iterations % 2));
+                fill(0, 0, 255);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper4.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             }else if(recordArray[4].type === "sawtooth"){
                 var pos = recordArray[4].drawing.history[i];
-                fill(0, 255 * (looper4.iterations % 2), 0);
+                fill(0, 255, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper4.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             } else if(recordArray[4].type === "square"){
                 var pos = recordArray[4].drawing.history[i];
-                fill(255 * (looper4.iterations % 2), 0, 0);
+                fill(255, 0, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255 * (looper4.iterations % 2));
+                ellipse(pos.x, pos.y, 25, 25);
             }
         }
     } 
@@ -254,21 +334,33 @@ looper5 = new p5.SoundLoop(function(timeFromNow){
                 fill(255 * (looper5.iterations % 2), 255 * (looper5.iterations % 2) , 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255);
+                ellipse(pos.x, pos.y, 25, 25);
             }else if(recordArray[5].type === "triangle"){
                 var pos = recordArray[5].drawing.history[i];
                 fill(0, 0, 255 * (looper5.iterations % 2));
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255);
+                ellipse(pos.x, pos.y, 25, 25);
             }else if(recordArray[5].type === "sawtooth"){
                 var pos = recordArray[5].drawing.history[i];
                 fill(0, 255 * (looper5.iterations % 2), 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255);
+                ellipse(pos.x, pos.y, 25, 25);
             } else if(recordArray[5].type === "square"){
                 var pos = recordArray[5].drawing.history[i];
                 fill(255 * (looper5.iterations % 2), 0, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255);
+                ellipse(pos.x, pos.y, 25, 25);
             }
         }
     } 
@@ -284,21 +376,33 @@ looper6 = new p5.SoundLoop(function(timeFromNow){
                 fill(255 * (looper6.iterations % 2), 255 * (looper6.iterations % 2) , 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255);
+                ellipse(pos.x, pos.y, 25, 25);
             }else if(recordArray[6].type === "triangle"){
                 var pos = recordArray[6].drawing.history[i];
                 fill(0, 0, 255 * (looper6.iterations % 2));
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255);
+                ellipse(pos.x, pos.y, 25, 25);
             }else if(recordArray[6].type === "sawtooth"){
                 var pos = recordArray[6].drawing.history[i];
                 fill(0, 255 * (looper6.iterations % 2), 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255);
+                ellipse(pos.x, pos.y, 25, 25);
             } else if(recordArray[6].type === "square"){
                 var pos = recordArray[6].drawing.history[i];
                 fill(255 * (looper6.iterations % 2), 0, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255);
+                ellipse(pos.x, pos.y, 25, 25);
             }
         }
     } 
@@ -314,21 +418,33 @@ looper7 = new p5.SoundLoop(function(timeFromNow){
                 fill(255 * (looper7.iterations % 2), 255 * (looper7.iterations % 2) , 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255);
+                ellipse(pos.x, pos.y, 25, 25);
             }else if(recordArray[7].type === "triangle"){
                 var pos = recordArray[7].drawing.history[i];
                 fill(0, 0, 255 * (looper7.iterations % 2));
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255);
+                ellipse(pos.x, pos.y, 25, 25);
             }else if(recordArray[7].type === "sawtooth"){
                 var pos = recordArray[7].drawing.history[i];
                 fill(0, 255 * (looper7.iterations % 2), 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255);
+                ellipse(pos.x, pos.y, 25, 25);
             } else if(recordArray[7].type === "square"){
                 var pos = recordArray[7].drawing.history[i];
                 fill(255 * (looper7.iterations % 2), 0, 0);
                 vertex(pos.x,pos.y);
                 endShape();
+                stroke(0);
+                fill(255);
+                ellipse(pos.x, pos.y, 25, 25);
             }
         }
     } 

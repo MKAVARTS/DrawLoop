@@ -7,6 +7,12 @@ $(document).click(function(){
   clickTarget = event.target.className;
 })
 
+$( document ).ready(function() {
+  $('#info').modal('show');
+});
+
+
+
 // mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height
 let recordBufferArray = [];
 let dropDownArray = [];
@@ -57,14 +63,14 @@ function preload(){
     triangle.playMode("restart");
     triangle.loop();
   });
-  sawtooth = loadSound('../Assets/sounds/guitar.wav', function(){
+  sawtooth = loadSound('../Assets/sounds/synthy.wav', function(){
     // sawtooth.rate(2.0);
     sawtooth.setVolume(0.0);
     sawtooth.playMode("restart");
     sawtooth.loop();
   });
   square = loadSound('../Assets/sounds/popMarimbaD.wav', function(){
-    square.rate(0.5);
+    // square.rate(0.5);
     square.setVolume(0.0);
     square.playMode("restart");
     square.loop();
@@ -248,7 +254,7 @@ function draw(){
 
       strokeWeight(1);
       stroke(0);
-      ellipse(mouseX,mouseY, 20, 20);
+      line(mouseX,mouseY, pmouseX, pmouseY);
     }
       }
     }
