@@ -5,7 +5,7 @@ var cnv;
 
 $(document).click(function(){
   clickTarget = event.target.className;
-})
+});
 
 $( document ).ready(function() {
   $('#info').modal('show');
@@ -21,30 +21,20 @@ var h = 350;
 var sine, triangle, sawooth, square;
 let amplitude;
 var selector = "null";
-var noDraw = true;
 var ifIndexFilled = true;
 var startRecording, stopRecording, playbackRecording, stopRecorder, checkRecording;
 var startLooper, startLooping;
-var database;
 var cnv;
-var pathRecord;
 
 var clickTarget;
-var sound;
-var pathArray = [];
 var updatePath;
 var recordArray = [];
-var points = [];
 var arrayIndex;
 var canDraw = true;
 var path = new pathStore();
 var looper0,looper1, looper2, looper3, looper4;
 var fillCount = 0;
 var updateSliders = false;
-var level, amps;
-
-
-
 
 
 
@@ -117,50 +107,8 @@ function pathStore(x,y){
 this.update = function(x,y){
   var v = createVector(x,y);
   this.history.push(v);
-  // if(this.history.length > 100){
-  //   this.history.splice(0,1);
-  // }
-}
-
-  this.showSine = function(){
-      for(var i = 0; i < this.history.length; i++){
-      var pos = this.history[i];
-          stroke(0);
-          strokeWeight(1);
-          fill(255,255,0);
-          ellipse(pos.x,pos.y, 10, 10);
-      }
-  }
-  this.showTriangle = function(){
-    for(var i = 0; i < this.history.length; i++){
-    var pos = this.history[i];
-        stroke(0);
-        strokeWeight(1);
-        fill(0,0,255);
-        ellipse(pos.x,pos.y, 10, 10);
-    }
-  }
-    this.showSaw = function(){
-      for(var i = 0; i < this.history.length; i++){
-      var pos = this.history[i];
-          stroke(0);
-          strokeWeight(1);
-          fill(0,255,0);
-          ellipse(pos.x,pos.y, 10, 10);
-      }
-    }
-      this.showSquare = function(){
-        for(var i = 0; i < this.history.length; i++){
-        var pos = this.history[i];
-            stroke(0);
-            strokeWeight(1);
-            fill(255,0,0);
-            ellipse(pos.x,pos.y, 10, 10);
-        }
 }
 }
-
-
 
 
 
@@ -173,8 +121,6 @@ this.update = function(x,y){
 
 
 function mousePressed(){
-
- 
 
   if(clickTarget === "user"){
 
@@ -194,15 +140,26 @@ function mousePressed(){
 function mouseReleased(){
 
 
+
   if(clickTarget === "user"){
 
   }else if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null" && canDraw === true){
 
-  eval(selector).setVolume(0.0, 0.01);
+  canDraw = false;
+  eval(selector).setVolume(0.0, 0.02);
   // console.log(pathArray);
   // console.log("end recording");
+
+setTimeout(callRecordingStop, 50);
+
+function callRecordingStop(){
   stopRecording(arrayIndex);
+}
   // console.log("arrayIndex, mouseRelease:", arrayIndex);
+  setTimeout(ableToDraw, 250);
+  function ableToDraw(){
+    canDraw = true;
+  }
   }
 }
 
@@ -228,6 +185,8 @@ function setup(){
 function draw(){
 
 
+
+  //this loop updates the sliders if it has a "filled" property
   for(var i = 0; i < 7; i++ && updateSliders === true){
     if(recordArray[i].filled === true){
     recordArray[i].recording.rate(parseFloat($(`#${i}effect1`).val()));
@@ -238,6 +197,9 @@ function draw(){
     }
   }
 
+
+  //stop drawing if there are more than 8 drawings in the canvas.
+
   if(mouseIsPressed){ 
     if(fillCount > 8){
       canDraw === false;
@@ -245,12 +207,15 @@ function draw(){
     canDraw === true;
   }
 
+
+//store the mouseX & mouseY points 
   if(canDraw === true){
-  setTimeout(updatePath, 200);
+
+    setTimeout(updatePath, 200);
 
     function updatePath(){
-    if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null"){
-    path.update(mouseX,mouseY);
+      if(mouseX > 0 && mouseX < w && mouseY > 0 && mouseY < h && selector != "null"){
+      path.update(mouseX,mouseY);
 
       strokeWeight(1);
       stroke(0);

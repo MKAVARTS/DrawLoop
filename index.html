@@ -23,7 +23,7 @@
 
 
 </head>
-<body class='container-fluid'>
+<body class='container'>
 
 
 
@@ -53,8 +53,8 @@
                 <li><p>Click to select a draw tool in the "toolbox" section. A tool has to be selected in order to draw.</p></li>
                <li><p>Draw something on the canvas with your mouse.</p></li>
                <li><p>When you release the mouse, a module will pop into the "tools" section. You can modify or delete your sound drawing here.</p></li>
-                <li><p>The drawings are sound loops that are synced, in other words, they will automatically be time with each other.</p></li>
-                <li><p>Press "save" to create a 30 second recording, and download a snapshot of your loop.</p></h3>
+                <li><p>The drawings are sound loops that are synced, in other words, they will automatically be in time with each other.</p></li>
+                <li><p>Press "save" to create a recording, and download a snapshot of your loop.</p></h3>
                 <li><p>That's it! Have fun :) </p></li>
             </ul>
             </div>
@@ -65,40 +65,7 @@
         </div>
       </div>
 
-
-
-
-
-            <!-- ///////////////////////////// NEW DRAWING  ///////////////////////////// -->
-      <div class="modal fade" id="newDrawing" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">DrawLoop</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body" class="modal-dialog modal-lg">
-            <ul>
-                <h5>Heads up!</h5> 
-                <p>You are about to clear your drawing. Cool?</p>
-            </ul>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="user" data-dismiss="modal">Nope!</button>
-              <button type="button" class="user" data-dismiss="modal" id="deleteDrawing">Yup!</button>
-            </div>
-          </div> 
-        </div>
-      </div>
-
-
-
-
-
-
-            <!-- ///////////////////////////// SAVED/HEAD TO GALLERY  ///////////////////////////// -->
+            <!-- ///////////////////////////// DOWNLOAD SNAPSHOT ///////////////////////////// -->
       <div class="modal fade" id="savingDrawing" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
@@ -121,30 +88,6 @@
         </div>
       </div>
 
-
-
-      <div class="modal fade" id="galleryWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">DrawLoop</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body" class="modal-dialog modal-lg">
-                <ul>
-                    <h5>Heads up!</h5>
-                    <p>You are about to head to the Gallery, which will clear your drawing. If not, click no, and save first :)</p>
-                </ul>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="user" data-dismiss="modal">Nope!</button>
-                  <button type="button" class="user" data-dismiss="modal" id="populateGallery">Yup!</button>
-                </div>
-              </div> 
-            </div>
-          </div>
 
           <div class="modal fade" id="looperCountWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -172,7 +115,7 @@
 
 
 <!-- begin container -->
-<div id="mainDiv" class="container-fluid">
+<div id="mainDiv" class="container">
     <!-- Button trigger modal -->
 
 
@@ -189,13 +132,6 @@
 
     <!-- SCRIPTS -->
 </div>
-<video class='row' id="video"></video>
-
-    <footer class="container-fluid">
-        <div class="col">
-            <h6>powered by <a href="https://p5js.org/">p5.js</a></h6>
-        </div>
-    </footer>
 
     <script src="js/p5.min.js"></script>
     <script src="js/p5.sound.min.js"></script>

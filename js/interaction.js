@@ -3,13 +3,8 @@ var song,videoElement, stream, mediaRecorder, canvus, firebaseRecorder, firebase
 var storageRef, firebaseVideoRef, firebaseAudioRecorder, firebaseAudioRecording, videoURL, audioURL, recorder;
 
 
-
-
-
-
-
-
 // --------- MOUSE HOVERS & SELECTORS  -------- //
+
 
 
 $(document).mouseover(function(){
@@ -107,7 +102,7 @@ function makeModule(type, index){
         <label>Rate</label>
         <input id='${index}effect1' type="range" value="1.0"  min="-2.0" max="2.0" step= "0.25" class="dropdown-item" class="effectSlider">
         <label>Length</label>
-        <input id='${index}effect2' value ="2.0" type="range" min="0.5" max="4.0" step ="0.5" class="dropdown-item" class="effectSlider">
+        <input id='${index}effect2' value ="4.0" type="range" min="0.5" max="4.0" step ="0.5" class="dropdown-item" class="effectSlider">
         <label>Volume</label>
         <input id='${index}effect3' type="range" value="1.0" step="0.1" min="0.0" max="1.0" class="dropdown-item" class="effectSlider">
       </div>
@@ -162,7 +157,7 @@ $(document).click(function(){
             function startDownloadRecording(){
                 console.log('trying to startDownloadRecording');
                 recordForDownload.record(recordingforDownload);
-                setTimeout(endRecordTime, 15000);
+                setTimeout(endRecordTime, 10000);
 
                 for(var i = 0; i < recordArray.length; i++){
                     if(recordArray[i].filled === true){
@@ -199,7 +194,7 @@ $(document).click(function(){
                 }
                     
                         function timeToSaveSound(){
-                        save(recordingforDownload, `${id}.mp3`);
+                        save(recordingforDownload, `${id}.wav`);
                         setTimeout(timeToDownloadCanvas, 200);
                 }
         
@@ -284,23 +279,23 @@ $('#populateGallery').click(function(){
 
 
 // clears javascript arrays and handles audio 
-    $('#deleteDrawing').click(function(){
-        masterVolume(0.0, 0.1);
-        clear();
-        background(255);
-        $('#modules').html('');
-        dropDownArray = [];
-        pathArray = [];
-        recordArray = [];
-        arrayIndex = 0;
-        looper0.stop();
-        looper1.stop();
-        looper2.stop();
-        looper3.stop();
-        looper4.stop();
-        looper5.stop();
-        looper6.stop();
-        looper7.stop();
-        populateRecordArray();
-      });
+    // $('#deleteDrawing').click(function(){
+    //     masterVolume(0.0, 0.1);
+    //     clear();
+    //     background(255);
+    //     $('#modules').html('');
+    //     dropDownArray = [];
+    //     pathArray = [];
+    //     recordArray = [];
+    //     arrayIndex = 0;
+    //     looper0.stop();
+    //     looper1.stop();
+    //     looper2.stop();
+    //     looper3.stop();
+    //     looper4.stop();
+    //     looper5.stop();
+    //     looper6.stop();
+    //     looper7.stop();
+    //     populateRecordArray();
+    //   });
 

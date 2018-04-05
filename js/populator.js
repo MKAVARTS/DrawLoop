@@ -7,11 +7,11 @@ $(document).ready(function() {
 function populateDraw(){
     $('#mainDiv').html(
        `<div class="row" id="top">
-        <div id="indexHeaders" class="col-4">
+        <div id="indexHeaders" class="col">
             <h1>DrawLoop</h1>
-            <h3>A sound drawing application and community gallery</h3>
+            <h3>A sound drawing application</h3>
         </div>
-        <div id="toolBox" class= "col-4">
+        <div id="toolBox" class= "col">
             <div>
                 <h4 id="toolBoxHeading">Toolbox</h4>
             </div>
@@ -23,15 +23,15 @@ function populateDraw(){
             </div>
         </div>
         <div id="toolsHeader" class="col">
-        <button type="button" id="information" class="user" data-toggle="modal" data-target="#info"> Instructions </button>
-            <button class="user" id="save"> Save </button>
-            <h5>Tools</h5>
+                <div col-2> </div>
+                <button type="button" id="information" class="user" data-toggle="modal" data-target="#info"> instructions </button>
+                <button class="user" id="save"> save </button>
+                <h5>Tools</h5>
         </div>
     </div>
     <div class="row" class="canvasAndModules">
-        <div class="col-8" id="soniDraw"></div>
-        <div class="col-1"></div>
-        <div id="modules" class="col-2">
+        <div class="col" id="soniDraw"></div>
+        <div id="modules" class="col">
         </div>
     </div>`
     );

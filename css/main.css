@@ -76,14 +76,17 @@ h6{
         /* background-color: blue; */
 
 
-
+ul{
+    font-family: Helvetica;
+}
 
 /* -----------CANVAS------------- */
 
 
-#defaultCanvas0{
+/* #defaultCanvas0{
     margin-left: 100px;
-}
+    margin-right: 10px;
+} */
 
 
 /* -----------TOOLBOX------------- */
@@ -107,7 +110,7 @@ h6{
   
   #vectorImage {
     display: flex;
-    justify-content: space-around; 
+    justify-content: space-between; 
 }
 
 
